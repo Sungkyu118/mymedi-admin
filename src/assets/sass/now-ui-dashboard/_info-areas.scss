@@ -1,3 +1,5 @@
+﻿@use "variables" as *;
+@use "mixins" as *;
 .info{
     &.info-hover{
         .info-title{
@@ -168,3 +170,4 @@
         color: $white-color;
     }
 }
+

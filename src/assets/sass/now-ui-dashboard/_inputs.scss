@@ -1,3 +1,7 @@
+﻿@use "variables" as *;
+@use "mixins" as *;
+@use "sass:color";
+
 @include form-control-placeholder($medium-gray, 1);
 
 .form-control {
@@ -68,13 +72,13 @@
 
 .has-success .form-control:focus,
 .has-success.input-group-focus .input-group-addon{
-  border-color: lighten($success-color, 5%);
+  border-color: color.adjust($success-color, $lightness: 5%);
 }
 
 .has-danger .form-control,
 .has-danger .input-group-addon,
 .has-danger.input-group-focus .input-group-addon{
-  border-color: lighten($danger-color, 30%);
+  border-color: color.adjust($danger-color, $lightness: 30%);
   color: $danger-color;
   background-color: rgba(222,222,222, .1);
 
@@ -372,3 +376,4 @@ textarea.form-control{
     margin-top: 6px;
   }
 }
+

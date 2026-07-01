@@ -1,4 +1,6 @@
-%card-profile{
+@use "../variables" as *;
+
+.card-profile{
     margin-top: 30px;
     text-align: center;
 
@@ -6,7 +8,7 @@
         margin-top: 0;
     }
 
-     [class*=col-]{
+    [class*=col-]{
         .card-description{
             margin-bottom: 0;
 
@@ -14,9 +16,7 @@
                 margin-top: 8px;
             }
         }
-
-
-     }
+    }
 
     .card-header-avatar{
         max-width: 130px;
@@ -42,8 +42,4 @@
             margin: 0 auto 30px;
         }
     }
-}
-
-.card-profile{
-  @extend %card-profile;
 }

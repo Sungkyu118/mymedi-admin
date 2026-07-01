@@ -23,8 +23,8 @@
           <l-switch
             on-text="ON"
             off-text="OFF"
-            :value="sidebarMini"
-            @input="(val) => updateValue('sidebarMini', val)"
+            :model-value="sidebarMini"
+            @update:modelValue="(val) => updateValue('sidebarMini', val)"
           ></l-switch>
         </li>
 
@@ -65,70 +65,13 @@
             </a>
           </div>
         </li>
-
-        <!-- <li class="header-title d-flex justify-content-center">
-          Thank you for sharing!
-        </li>
-
-        <li class="button-container">
-          <social-sharing
-            :url="shareUrl"
-            inline-template
-            title="Vue Now UI Dashboard - Premium Bootstrap Admin Template for Vue.js"
-            hashtags="vuejs, dashboard, bootstrap"
-            twitter-user="creativetim"
-          >
-            <div class="centered-buttons">
-              <network
-                network="facebook"
-                class="btn btn-facebook btn-icon btn-round"
-              >
-                <i
-                  class="fab fa-facebook-f"
-                  style="margin-right: 0%; margin-top: 26%"
-                ></i>
-              </network>
-              <network
-                network="pinterest"
-                class="btn btn-pinterest btn-icon btn-round"
-              >
-                <i
-                  class="fab fa-fw fa-pinterest"
-                  style="margin-right: 0%; margin-top: 26%"
-                ></i>
-              </network>
-              <network
-                network="twitter"
-                class="btn btn-twitter btn-icon btn-round"
-              >
-                <i
-                  class="fab fa-fw fa-twitter"
-                  style="margin-right: 0%; margin-top: 26%"
-                ></i>
-              </network>
-            </div>
-          </social-sharing>
-        </li> -->
       </ul>
     </div>
   </div>
 </template>
 <script>
-import Vue from "vue";
-
-import VueGitHubButtons from "vue-github-buttons";
-import "vue-github-buttons/dist/vue-github-buttons.css";
 import { Switch as LSwitch } from "src/components";
 
-import SocialSharing from "vue-social-sharing";
-
-const VueSelect = {
-  install(Vue, options) {
-    Vue.component("SocialSharing", SocialSharing);
-  },
-};
-Vue.use(VueSelect);
-Vue.use(VueGitHubButtons, { useCache: true });
 export default {
   components: {
     LSwitch,
@@ -187,7 +130,9 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss">
+@use "../../../../assets/sass/now-ui-dashboard/fixed-plugin";
+
 .centered-row {
   display: flex;
   height: 100%;

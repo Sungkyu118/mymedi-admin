@@ -1,10 +1,5 @@
 <template>
-  <component
-    :is="baseComponent"
-    :to="link.path ? link.path : '/'"
-    :class="{ active: isActive }"
-    tag="li"
-  >
+  <li :class="{ active: isActive }">
     <a
       v-if="isMenu"
       href="#"
@@ -34,27 +29,28 @@
     >
       <component
         :to="link.path"
-        @click.native="linkClick"
         :is="elementType(link, false)"
         :class="{ active: link.active }"
         class="nav-link"
         :target="link.target"
         :href="link.path"
       >
-        <template v-if="addLink">
-          <span class="sidebar-mini-icon">{{ linkPrefix }}</span>
-          <span class="sidebar-normal">{{ link.name }}</span>
-        </template>
-        <template v-else>
-          <i :class="link.icon"></i>
-          <p>{{ link.name }}</p>
-        </template>
+        <span class="sidebar-link-content" @click="linkClick">
+          <template v-if="addLink">
+            <span class="sidebar-mini-icon">{{ linkPrefix }}</span>
+            <span class="sidebar-normal">{{ link.name }}</span>
+          </template>
+          <template v-else>
+            <i :class="link.icon"></i>
+            <p>{{ link.name }}</p>
+          </template>
+        </span>
       </component>
     </slot>
-  </component>
+  </li>
 </template>
 <script>
-import { CollapseTransition } from "vue2-transitions";
+import { CollapseTransition } from "src/components/Transitions";
 
 export default {
   name: "sidebar-item",
@@ -101,9 +97,6 @@ export default {
     };
   },
   computed: {
-    baseComponent() {
-      return this.isMenu || this.link.isRoute ? "li" : "router-link";
-    },
     linkPrefix() {
       if (this.link.name) {
         let words = this.link.name.split(" ");
@@ -130,8 +123,21 @@ export default {
   },
   methods: {
     addChild(item) {
-      const index = this.$slots.default.indexOf(item.$vnode);
-      this.children.splice(index, 0, item);
+      this.children.push(item);
+      this.children.sort((left, right) => {
+        if (!left.$el || !right.$el || left === right) {
+          return 0;
+        }
+
+        const position = left.$el.compareDocumentPosition(right.$el);
+        if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
+          return -1;
+        }
+        if (position & Node.DOCUMENT_POSITION_PRECEDING) {
+          return 1;
+        }
+        return 0;
+      });
     },
     removeChild(item) {
       const tabs = this.children;
@@ -164,6 +170,14 @@ export default {
     collapseSubMenu(link) {
       link.collapsed = !link.collapsed;
     },
+    removeFromSidebar() {
+      if (this.$el && this.$el.parentNode) {
+        this.$el.parentNode.removeChild(this.$el);
+      }
+      if (this.removeLink) {
+        this.removeLink(this);
+      }
+    },
   },
   mounted() {
     if (this.addLink) {
@@ -176,13 +190,8 @@ export default {
       this.collapsed = false;
     }
   },
-  destroyed() {
-    if (this.$el && this.$el.parentNode) {
-      this.$el.parentNode.removeChild(this.$el);
-    }
-    if (this.removeLink) {
-      this.removeLink(this);
-    }
+  unmounted() {
+    this.removeFromSidebar();
   },
 };
 </script>
@@ -193,5 +202,10 @@ export default {
 .sidebar ul.links__nav {
   margin-top: 0;
   padding-top: 10px;
+}
+.sidebar-link-content {
+  align-items: center;
+  display: flex;
+  width: 100%;
 }
 </style>

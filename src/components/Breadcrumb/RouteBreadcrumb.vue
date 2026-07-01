@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import BreadCrumb from './Breadcrumb';
-import BreadCrumbItem from './BreadcrumbItem';
+import BreadCrumb from './Breadcrumb.vue';
+import BreadCrumbItem from './BreadcrumbItem.vue';
 
 export default {
   name: 'route-breadcrumb',

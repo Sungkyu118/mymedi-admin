@@ -14,37 +14,7 @@
 
  */
 
-import Vue from 'vue';
-import axios from "axios";
-import DashboardPlugin from './dashboard-plugin';
-
-// Plugins
-import App from './App.vue';
-import VueAxios from "vue-axios";
-import IsDemo from "./components/isDemo"
-import VueMeta from 'vue-meta';
-
-import "./assets/css/demo.css";
-
-// router setup
-import routes from './routes';
-import store from "./store";
-
-// plugin setup
-Vue.use(DashboardPlugin);
-Vue.use(VueAxios, axios);
-Vue.use(IsDemo);
-Vue.use(VueMeta, { keyName: 'head' });
-
-
+import { createVueApp } from "./create-app";
 
 /* eslint-disable no-new */
-const app = new Vue({
-  el: '#app',
-  render: h => h(App),
-  router: routes,
-  store:store
-});
-
-store.$app = app;
-
+createVueApp();

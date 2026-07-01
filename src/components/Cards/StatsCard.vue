@@ -19,9 +19,11 @@
         </div>
       </div>
     </div>
-    <div class="stats" slot="footer" v-if="$slots.footer">
-      <slot name="footer"></slot>
-    </div>
+    <template #footer v-if="$slots.footer">
+      <div class="stats">
+        <slot name="footer"></slot>
+      </div>
+    </template>
   </card>
 </template>
 <script>

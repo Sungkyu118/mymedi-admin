@@ -2,7 +2,7 @@
   <div class="wrapper" :class="{ 'nav-open': $sidebar.showSidebar }">
     <notifications></notifications>
     <side-bar :background-color="sidebarBackground">
-      <template slot-scope="props" slot="links">
+      <template #links="props">
         <user-menu></user-menu>
         <sidebar-item
           :link="{
@@ -99,9 +99,12 @@
     <div class="main-panel">
       <top-navbar></top-navbar>
       <sidebar-share
-        :color.sync="sidebarBackground"
-        :fixed-navbar.sync="fixedNavbar"
-        :sidebarMini.sync="sidebarMini"
+        :color="sidebarBackground"
+        :fixed-navbar="fixedNavbar"
+        :sidebarMini="sidebarMini"
+        @update:color="sidebarBackground = $event"
+        @update:fixed-navbar="fixedNavbar = $event"
+        @update:sidebarMini="sidebarMini = $event"
         style="cursor: pointer"
       >
       </sidebar-share>
@@ -111,16 +114,19 @@
         :class="{ content: !$route.meta.hideContent }"
         @click="toggleSidebar"
       >
-        <zoom-center-transition :duration="200" mode="out-in">
-          <!-- your content here -->
-          <router-view></router-view>
-        </zoom-center-transition>
+        <router-view v-slot="{ Component }">
+          <zoom-center-transition :duration="200" mode="out-in">
+            <!-- your content here -->
+            <component :is="Component"></component>
+          </zoom-center-transition>
+        </router-view>
       </div>
       <content-footer v-if="!$route.meta.hideFooter"></content-footer>
     </div>
   </div>
 </template>
 <script>
+import "@/assets/styles/app-shell.scss";
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
@@ -142,9 +148,13 @@ function initScrollbar(className) {
 import TopNavbar from "./TopNavbar.vue";
 import ContentFooter from "./ContentFooter.vue";
 import UserMenu from "./Extra/UserMenu.vue";
-import { SlideYDownTransition, ZoomCenterTransition } from "vue2-transitions";
-import Vuex from "vuex";
-import SidebarShare from "./Extra/SidebarSharePlugin";
+import { ZoomCenterTransition } from "src/components/Transitions";
+import { ensureProfileStore } from "src/store/ensure-profile-store";
+
+const SidebarShare = () =>
+  import(
+    /* webpackChunkName: "dashboard-fixed-plugin" */ "./Extra/SidebarSharePlugin.vue"
+  );
 
 export default {
   components: {
@@ -162,6 +172,10 @@ export default {
     };
   },
   methods: {
+    async loadProfileStore() {
+      await ensureProfileStore(this.$store);
+      await this.$store.dispatch("profile/me");
+    },
     initScrollbar() {
       let isWindows = navigator.platform.startsWith("Win");
       if (isWindows) {
@@ -193,12 +207,8 @@ export default {
     } else {
       docClasses.add("perfect-scrollbar-off");
     }
-    this.initScrollbar(), this.$store.dispatch("profile/me");
-  },
-  computed: {
-    ...Vuex.mapState({
-      me: (state) => state.profile.me,
-    }),
+    this.initScrollbar();
+    void this.loadProfileStore();
   },
   watch: {
     sidebarMini() {
@@ -208,6 +218,8 @@ export default {
 };
 </script>
 <style lang="scss">
+@use "../../../assets/sass/now-ui-dashboard/plugins/plugin-perfect-scrollbar";
+
 $scaleSize: 0.95;
 @keyframes zoomIn95 {
   from {

@@ -1,11 +1,9 @@
-%card-stats{
-  hr{
-    margin: 5px 15px;
-  }
-}
+@use "../variables" as *;
 
 .card-stats{
-    @extend %card-stats;
+    hr{
+        margin: 5px 15px;
+    }
 
     .statistics{
         position: relative;

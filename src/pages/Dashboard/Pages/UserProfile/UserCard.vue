@@ -1,8 +1,10 @@
 <template>
   <card class="card-user">
-    <div slot="image" class="image">
-      <img src="/img/bg5.jpg" alt="..." />
-    </div>
+    <template #image>
+      <div class="image">
+        <img src="/img/bg5.jpg" alt="..." />
+      </div>
+    </template>
     <div>
       <div class="author">
         <a href="#">
@@ -17,17 +19,19 @@
         I'm in that two seat Lambo"
       </p>
     </div>
-    <div slot="footer" class="button-container">
-      <n-button href="#" type="neutral" icon round size="lg">
-        <i class="fab fa-facebook-square"></i>
-      </n-button>
-      <n-button href="#" type="neutral" icon round size="lg">
-        <i class="fab fa-twitter"></i>
-      </n-button>
-      <n-button href="#" type="neutral" icon round size="lg">
-        <i class="fab fa-google-plus-square"></i>
-      </n-button>
-    </div>
+    <template #footer>
+      <div class="button-container">
+        <n-button href="#" type="neutral" icon round size="lg">
+          <i class="fab fa-facebook-square"></i>
+        </n-button>
+        <n-button href="#" type="neutral" icon round size="lg">
+          <i class="fab fa-twitter"></i>
+        </n-button>
+        <n-button href="#" type="neutral" icon round size="lg">
+          <i class="fab fa-google-plus-square"></i>
+        </n-button>
+      </div>
+    </template>
   </card>
 </template>
 <script>

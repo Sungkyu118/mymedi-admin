@@ -1,14 +1,14 @@
-//Utilities
-@import "mixins/transparency";
+// Utilities
+@forward "mixins/transparency";
+@forward "mixins/vendor-prefixes";
 
-//Components
-@import "mixins/buttons";
-@import "mixins/vendor-prefixes";
-@import "mixins/inputs";
-@import "mixins/dropdown";
-@import "mixins/badges";
-@import "mixins/popovers";
-@import "mixins/modals";
-@import "mixins/page-header";
-@import "mixins/tags";
-@import "mixins/cards";
+// Components
+@forward "mixins/buttons";
+@forward "mixins/inputs";
+@forward "mixins/dropdown";
+@forward "mixins/badges";
+@forward "mixins/popovers";
+@forward "mixins/modals";
+@forward "mixins/page-header";
+@forward "mixins/tags";
+@forward "mixins/cards";

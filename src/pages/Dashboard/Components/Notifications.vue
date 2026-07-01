@@ -114,7 +114,7 @@
                     <n-button
                       type="primary"
                       block
-                      @click.native="notifyVue('top', 'left')"
+                      @click="notifyVue('top', 'left')"
                       >Top Left</n-button
                     >
                   </div>
@@ -122,7 +122,7 @@
                     <n-button
                       type="primary"
                       block
-                      @click.native="notifyVue('top', 'center')"
+                      @click="notifyVue('top', 'center')"
                       >Top Center</n-button
                     >
                   </div>
@@ -130,7 +130,7 @@
                     <n-button
                       type="primary"
                       block
-                      @click.native="notifyVue('top', 'right')"
+                      @click="notifyVue('top', 'right')"
                       >Top Right</n-button
                     >
                   </div>
@@ -144,7 +144,7 @@
                     <n-button
                       type="primary"
                       block
-                      @click.native="notifyVue('bottom', 'left')"
+                      @click="notifyVue('bottom', 'left')"
                       >Bottom Left</n-button
                     >
                   </div>
@@ -152,7 +152,7 @@
                     <n-button
                       type="primary"
                       block
-                      @click.native="notifyVue('bottom', 'center')"
+                      @click="notifyVue('bottom', 'center')"
                       >Bottom Center</n-button
                     >
                   </div>
@@ -160,7 +160,7 @@
                     <n-button
                       type="primary"
                       block
-                      @click.native="notifyVue('bottom', 'right')"
+                      @click="notifyVue('bottom', 'right')"
                       >Bottom Right</n-button
                     >
                   </div>
@@ -175,22 +175,25 @@
                 <h4 class="card-title">Modal</h4>
               </div>
 
-              <n-button type="primary" @click.native="modals.classic = true">
+              <n-button type="primary" @click="modals.classic = true">
                 Classic modal
               </n-button>
-              <n-button type="info" @click.native="modals.notice = true">
+              <n-button type="info" @click="modals.notice = true">
                 Notice modal
               </n-button>
-              <n-button @click.native="modals.mini = true">
+              <n-button @click="modals.mini = true">
                 Small alert modal
               </n-button>
 
               <!-- Classic Modal -->
               <modal
-                :show.sync="modals.classic"
+                :show="modals.classic"
+                @update:show="modals.classic = $event"
                 headerClasses="justify-content-center"
               >
-                <h4 slot="header" class="title title-up">Modal title</h4>
+                <template #header>
+                  <h4 class="title title-up">Modal title</h4>
+                </template>
                 <p>
                   Far far away, behind the word mountains, far from the
                   countries Vokalia and Consonantia, there live the blind texts.
@@ -200,9 +203,9 @@
                   regelialia. It is a paradisematic country, in which roasted
                   parts of sentences fly into your mouth.
                 </p>
-                <template slot="footer">
+                <template #footer>
                   <n-button>Nice Button</n-button>
-                  <n-button type="danger" @click.native="modals.classic = false"
+                  <n-button type="danger" @click="modals.classic = false"
                     >Close</n-button
                   >
                 </template>
@@ -210,13 +213,16 @@
 
               <!-- notice modal -->
               <modal
-                :show.sync="modals.notice"
+                :show="modals.notice"
+                @update:show="modals.notice = $event"
                 footerClasses="justify-content-center"
                 type="notice"
               >
-                <h5 slot="header" class="modal-title">
-                  How Do You Become an Affiliate?
-                </h5>
+                <template #header>
+                  <h5 class="modal-title">
+                    How Do You Become an Affiliate?
+                  </h5>
+                </template>
                 <template>
                   <div class="instruction">
                     <div class="row">
@@ -232,7 +238,7 @@
                       <div class="col-md-4">
                         <div class="picture">
                           <img
-                            src="/img/bg1.jpg"
+                            src="/img/bg3.jpg"
                             alt="Thumbnail Image"
                             class="rounded img-raised"
                           />
@@ -267,34 +273,39 @@
                     send us a tweet @creativetim. We're here to help!
                   </p>
                 </template>
-                <div slot="footer" class="justify-content-center">
-                  <n-button
-                    type="info"
-                    round
-                    @click.native="modals.notice = false"
-                    >Sounds good!</n-button
-                  >
-                </div>
+                <template #footer>
+                  <div class="justify-content-center">
+                    <n-button
+                      type="info"
+                      round
+                      @click="modals.notice = false"
+                      >Sounds good!</n-button
+                    >
+                  </div>
+                </template>
               </modal>
 
               <!-- small modal -->
               <modal
-                :show.sync="modals.mini"
+                :show="modals.mini"
+                @update:show="modals.mini = $event"
                 class="modal-primary"
                 :show-close="false"
                 headerClasses="justify-content-center"
                 type="mini"
               >
-                <div slot="header" class="modal-profile">
-                  <i class="now-ui-icons users_circle-08"></i>
-                </div>
+                <template #header>
+                  <div class="modal-profile">
+                    <i class="now-ui-icons users_circle-08"></i>
+                  </div>
+                </template>
                 <p>Always have an access to your profile</p>
-                <template slot="footer">
+                <template #footer>
                   <n-button type="neutral" link>Back</n-button>
                   <n-button
                     type="neutral"
                     link
-                    @click.native="modals.mini = false"
+                    @click="modals.mini = false"
                     >Close</n-button
                   >
                 </template>

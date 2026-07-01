@@ -19,6 +19,7 @@
 export default {
   name: 'n-switch',
   props: {
+    modelValue: [Array, Boolean],
     value: [Array, Boolean],
     onText: String,
     offText: String,
@@ -27,24 +28,29 @@ export default {
   computed: {
     switchClass() {
       let base = 'bootstrap-switch-';
-      let state = this.model ? 'on' : 'off';
+      let state = this.switchValue ? 'on' : 'off';
       return base + state;
     },
-    model: {
+    switchValue: {
       get() {
+        if (this.modelValue !== undefined) {
+          return this.modelValue;
+        }
         return this.value;
       },
       set(value) {
-        this.$emit('input', value);
+        this.$emit('update:modelValue', value);
+        this.$emit('change', value);
       }
     }
   },
   methods: {
     triggerToggle() {
-      this.model = !this.model;
+      this.switchValue = !this.switchValue;
     }
   }
 };
 </script>
-<style>
+<style lang="scss">
+@use "../assets/sass/now-ui-dashboard/plugins/plugin-bootstrap-switch";
 </style>

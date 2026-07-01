@@ -11,6 +11,7 @@ import noUiSlider from 'nouislider';
 export default {
   name: 'slider',
   props: {
+    modelValue: [String, Array, Number],
     value: [String, Array, Number],
     disabled: Boolean,
     start: {
@@ -47,9 +48,13 @@ export default {
     };
   },
   methods: {
+    emitValue(value) {
+      this.$emit('update:modelValue', value);
+      this.$emit('change', value);
+    },
     createSlider() {
       noUiSlider.create(this.$el, {
-        start: this.value || this.start,
+        start: this.currentValue || this.start,
         connect: this.connect,
         range: this.range,
         ...this.options
@@ -57,17 +62,25 @@ export default {
       const slider = this.$el.noUiSlider;
       slider.on('slide', () => {
         let value = slider.get();
-        if (value !== this.value) {
-          this.$emit('input', value);
+        if (value !== this.currentValue) {
+          this.emitValue(value);
         }
       });
+    }
+  },
+  computed: {
+    currentValue() {
+      if (this.modelValue !== undefined) {
+        return this.modelValue;
+      }
+      return this.value;
     }
   },
   mounted() {
     this.createSlider();
   },
   watch: {
-    value(newValue, oldValue) {
+    currentValue(newValue, oldValue) {
       const slider = this.$el.noUiSlider;
       const sliderValue = slider.get();
       if (newValue !== oldValue && sliderValue !== newValue) {
@@ -86,5 +99,6 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
+@use "../assets/sass/now-ui-dashboard/plugins/plugin-nouislider";
 </style>

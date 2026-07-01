@@ -95,11 +95,14 @@ export default {
         this.$sidebar.toggleMinimize();
       }
     },
+    hideSidebar() {
+      if (this.$sidebar.showSidebar) {
+        this.$sidebar.showSidebar = false;
+      }
+    },
   },
-  beforeDestroy() {
-    if (this.$sidebar.showSidebar) {
-      this.$sidebar.showSidebar = false;
-    }
+  beforeUnmount() {
+    this.hideSidebar();
   },
 };
 </script>

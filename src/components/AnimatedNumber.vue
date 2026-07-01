@@ -2,8 +2,7 @@
   <span>{{animatedNumber}}</span>
 </template>
 <script>
-import TWEEN from 'tween.js';
-import axios from "axios";
+import * as TWEEN from '@tweenjs/tween.js';
 
 export default {
   props: {

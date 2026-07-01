@@ -1,33 +1,66 @@
-@import "../variables";
+@use "../variables" as *;
+@use "../mixins" as *;
 
 .form-group {
   .el-input__inner {
-    @extend .form-control;
+    background-color: $transparent-bg;
+    border: 1px solid $light-gray;
+    border-radius: $btn-round-radius;
+    color: $black-color;
+    line-height: normal;
+    font-size: $font-size-small;
     width: 100%;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+    @include transition-input-focus-color();
+    @include box-shadow(none);
+
+    &:focus {
+      border: 1px solid $primary-color;
+      @include box-shadow(none);
+      outline: 0 !important;
+      color: $black-color;
+    }
   }
-  .el-select{
+
+  .el-select {
     width: 100%;
-    .el-input__inner{
+
+    .el-input__inner {
       cursor: pointer !important;
     }
   }
-  .el-input-number{
+
+  .el-input-number {
     width: 100%;
-    .plus-button{
-      @extend .btn-round, .btn-primary;
+
+    .plus-button {
+      border-width: $border-thick;
+      font-weight: $font-weight-normal;
+      font-size: $font-size-small;
+      line-height: $line-height;
+      border: none;
+      margin: 10px 1px;
+      border-radius: $border-radius-small;
+      padding: $padding-btn-vertical $padding-btn-horizontal;
+      cursor: pointer;
+      border-width: $border-thin;
+      border-radius: $btn-round-radius;
+      padding-right: $padding-round-horizontal;
+      padding-left: $padding-round-horizontal;
       padding: 0 !important;
       border: 0;
+      @include btn-styles($primary-color, $primary-states-color);
     }
-    .el-input-number__decrease{
+
+    .el-input-number__decrease {
       @extend .plus-button;
       border-radius: $btn-round-radius 0 0 $btn-round-radius !important;
     }
-    .el-input-number__increase{
+
+    .el-input-number__increase {
       @extend .plus-button;
       border-radius: 0 $btn-round-radius $btn-round-radius 0 !important;
     }
   }
 }
-

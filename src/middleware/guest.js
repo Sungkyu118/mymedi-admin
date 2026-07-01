@@ -1,9 +1,14 @@
 import store from "../store";
+import { LOGIN_REQUIRED } from "../auth-config";
 
-export default function guest({ next, router }) {
-  if (store.getters.isAuthenticated) {
-    return router.push({ name: "Home" });
+export default function guest() {
+  if (!LOGIN_REQUIRED) {
+    return true;
   }
 
-  return next();
+  if (store.getters.isAuthenticated) {
+    return { name: "Home" };
+  }
+
+  return true;
 }

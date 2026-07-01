@@ -1,3 +1,4 @@
+﻿@use "../variables" as *;
 @mixin popover-color($color, $text-color) {
     background-color: $color;
 
@@ -27,3 +28,4 @@
         opacity: .6;
     }
 }
+

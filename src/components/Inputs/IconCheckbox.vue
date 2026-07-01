@@ -1,12 +1,12 @@
 <template>
   <div class="choice"
-       :class="{active: checked}"
+       :class="{active: isChecked}"
        data-toggle="wizard-checkbox"
        @click="updateValue">
     <input type="checkbox"
            :name="name"
            :disabled="disabled"
-           :checked="checked">
+           :checked="isChecked">
     <div class="icon">
       <slot name="icon">
         <i :class="icon"></i>
@@ -20,10 +20,11 @@
 <script>
 export default {
   name: 'icon-checkbox',
-  model: {
-    prop: 'checked'
-  },
   props: {
+    modelValue: {
+      type: Boolean,
+      default: undefined
+    },
     checked: {
       type: Boolean,
       default: false
@@ -35,7 +36,17 @@ export default {
   },
   methods: {
     updateValue() {
-      this.$emit('input', !this.checked);
+      const nextValue = !this.isChecked;
+      this.$emit('update:modelValue', nextValue);
+      this.$emit('change', nextValue);
+    }
+  },
+  computed: {
+    isChecked() {
+      if (this.modelValue !== undefined) {
+        return this.modelValue;
+      }
+      return this.checked;
     }
   }
 };

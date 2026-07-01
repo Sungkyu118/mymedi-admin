@@ -1,3 +1,4 @@
+﻿@use "../variables" as *;
 @mixin dropdown-colors($brand-color, $dropdown-header-color, $dropdown-color, $background-color ) {
     background-color: $brand-color;
 
@@ -22,3 +23,4 @@
         background-color: $background-color;
     }
 }
+

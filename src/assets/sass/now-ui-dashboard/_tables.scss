@@ -1,3 +1,5 @@
+﻿@use "variables" as *;
+@use "mixins" as *;
 .table{
 
     .img-wrapper{
@@ -166,3 +168,4 @@
 #tables .table-responsive{
     margin-bottom: 30px;
 }
+

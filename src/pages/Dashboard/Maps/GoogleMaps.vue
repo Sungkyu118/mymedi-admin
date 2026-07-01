@@ -2,32 +2,38 @@
   <div class="row">
     <div class="col-md-12">
       <card class="card-map">
-        <div slot="header">
-          <h4 class="card-title">Satellite Map</h4>
-        </div>
+        <template #header>
+          <div>
+            <h4 class="card-title">Satellite Map</h4>
+          </div>
+        </template>
         <div id="satelliteMap" class="map map-big"></div>
       </card>
     </div>
     <div class="col-md-6">
       <card class="card-map">
-        <div slot="header">
-          <h4 class="card-title">Regular Map</h4>
-        </div>
+        <template #header>
+          <div>
+            <h4 class="card-title">Regular Map</h4>
+          </div>
+        </template>
         <div id="regularMap" class="map"></div>
       </card>
     </div>
     <div class="col-md-6">
       <card class="card-map">
-        <div slot="header">
-          <h4 class="card-title">Custom Skin & Settings Map</h4>
-        </div>
+        <template #header>
+          <div>
+            <h4 class="card-title">Custom Skin & Settings Map</h4>
+          </div>
+        </template>
         <div id="customSkinMap" class="map"></div>
       </card>
     </div>
   </div>
 </template>
 <script>
-import { API_KEY } from './API_KEY';
+import { API_KEY } from './API_KEY.js';
 import GoogleMapsLoader from 'google-maps';
 GoogleMapsLoader.KEY = API_KEY;
 

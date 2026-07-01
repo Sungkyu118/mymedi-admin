@@ -1,6 +1,8 @@
 import axios from "axios";
 import store from "@/store";
-const url = process.env.VUE_APP_API_BASE_URL;
+import { API_BASE_URL } from "../../env";
+
+const url = API_BASE_URL;
 
 const actions = {
   async forgotPassword({ commit }, data) {
@@ -26,7 +28,7 @@ const actions = {
       }
     };
 
-    store.dispatch("login", { user, requestOptions }, { root: true });
+    await store.dispatch("login", { user, requestOptions }, { root: true });
   }
 };
 

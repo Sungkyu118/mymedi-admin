@@ -25,11 +25,13 @@
     <div class="col-md-4 ml-auto mr-auto" style="margin-top: 35px">
       <form role="form" @submit.prevent="handleSubmit()">
         <card class="card-login card-plain">
-          <div slot="header">
-            <div class="logo-container">
-              <img src="/img/now-logo.png" alt="" />
+          <template #header>
+            <div>
+              <div class="logo-container">
+                <img src="/img/now-logo.png" alt="" />
+              </div>
             </div>
-          </div>
+          </template>
 
           <div>
             <fg-input
@@ -54,26 +56,28 @@
             </fg-input>
           </div>
 
-          <div slot="footer">
-            <n-button native-type="submit" type="primary" round block>
-              Get Started
-            </n-button>
-            <div class="pull-left">
-              <h6>
-                <router-link class="link footer-link" to="/register">
-                  Create Account
-                </router-link>
-              </h6>
-            </div>
+          <template #footer>
+            <div>
+              <n-button native-type="submit" type="primary" round block>
+                Get Started
+              </n-button>
+              <div class="pull-left">
+                <h6>
+                  <router-link class="link footer-link" to="/register">
+                    Create Account
+                  </router-link>
+                </h6>
+              </div>
 
-            <div class="pull-right">
-              <h6>
-                <a href="/password/reset" class="link footer-link"
-                  >Forgot password?</a
-                >
-              </h6>
+              <div class="pull-right">
+                <h6>
+                  <a href="/password/reset" class="link footer-link"
+                    >Forgot password?</a
+                  >
+                </h6>
+              </div>
             </div>
-          </div>
+          </template>
         </card>
       </form>
     </div>
@@ -88,11 +92,6 @@ export default {
     email: "admin@jsonapi.com",
     password: "secret",
   }),
-  computed: {
-    isAuthenticated: function () {
-      return this.$store.getters.isAuthenticated();
-    },
-  },
   methods: {
     async handleSubmit() {
       const user = {

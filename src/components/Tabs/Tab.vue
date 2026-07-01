@@ -20,11 +20,16 @@ export default {
   mounted() {
     this.addTab(this);
   },
-  destroyed() {
-    if (this.$el && this.$el.parentNode) {
-      this.$el.parentNode.removeChild(this.$el);
+  methods: {
+    removeFromTabs() {
+      if (this.$el && this.$el.parentNode) {
+        this.$el.parentNode.removeChild(this.$el);
+      }
+      this.removeTab(this);
     }
-    this.removeTab(this);
+  },
+  unmounted() {
+    this.removeFromTabs();
   }
 };
 </script>

@@ -1,3 +1,7 @@
+﻿@use "variables" as *;
+@use "mixins" as *;
+@use "sass:color";
+
 .section{
     padding: 70px 0;
     position: relative;
@@ -382,7 +386,7 @@
 }
 
 [data-background-color="gray"]{
-    background-color: lighten($default-color, 40%);
+    background-color: color.adjust($default-color, $lightness: 40%);
 }
 
 [data-background-color="orange"]{
@@ -573,3 +577,4 @@
         color: $white-color;
     }
 }
+

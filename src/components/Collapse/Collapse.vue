@@ -40,10 +40,21 @@ export default {
   },
   methods: {
     addItem(item) {
-      const index = this.$slots.default.indexOf(item.$vnode);
-      if (index !== -1) {
-        this.items.splice(index, 0, item);
-      }
+      this.items.push(item);
+      this.items.sort((left, right) => {
+        if (!left.$el || !right.$el || left === right) {
+          return 0;
+        }
+
+        const position = left.$el.compareDocumentPosition(right.$el);
+        if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
+          return -1;
+        }
+        if (position & Node.DOCUMENT_POSITION_PRECEDING) {
+          return 1;
+        }
+        return 0;
+      });
     },
     removeItem(item) {
       const items = this.items;

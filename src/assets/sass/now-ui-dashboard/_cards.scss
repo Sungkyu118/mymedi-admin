@@ -1,3 +1,18 @@
+@use "variables" as *;
+@use "mixins" as *;
+@use "cards/card-background";
+@use "cards/card-chart";
+@use "cards/card-collapse";
+@use "cards/card-contributions";
+@use "cards/card-info-area";
+@use "cards/card-map";
+@use "cards/card-profile";
+@use "cards/card-signup";
+@use "cards/card-stats-mini";
+@use "cards/card-stats";
+@use "cards/card-subcategories";
+@use "cards/card-testimonials";
+
 .card {
   border: 0;
   border-radius: $border-radius-small;
@@ -158,16 +173,3 @@
     padding-right: 0;
   }
 }
-
-@import "cards/card-background";
-@import "cards/card-chart";
-@import "cards/card-collapse";
-@import "cards/card-contributions";
-@import "cards/card-info-area";
-@import "cards/card-map";
-@import "cards/card-profile";
-@import "cards/card-signup";
-@import "cards/card-stats-mini";
-@import "cards/card-stats";
-@import "cards/card-subcategories";
-@import "cards/card-testimonials";

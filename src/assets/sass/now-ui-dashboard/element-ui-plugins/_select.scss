@@ -1,21 +1,41 @@
-@import "../variables";
+@use "../variables" as *;
+@use "../mixins" as *;
 
 $box-shadow-lg: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
+
 .select-card-styles {
   box-shadow: $box-shadow-lg;
   border: none;
   border-radius: $border-radius-small !important;
 }
 
-@mixin select($type) {
+@mixin select-input-base($background-color, $state-color) {
+  border-width: $border-thick;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-small;
+  line-height: $line-height;
+  border: none;
+  margin: 10px 1px;
+  border-radius: $border-radius-small;
+  padding: $padding-btn-vertical $padding-btn-horizontal;
+  cursor: pointer;
+  border-width: $border-thin;
+  border-radius: $btn-round-radius;
+  padding-right: $padding-round-horizontal;
+  padding-left: $padding-round-horizontal;
+  @include btn-styles($background-color, $state-color);
+}
+
+@mixin select($type, $button-color, $button-state-color, $text-color) {
   .select-#{$type} {
     &.el-select .el-input {
       .el-input__inner {
-        @extend .btn-#{$type};
+        @include select-input-base($button-color, $button-state-color);
       }
     }
+
     &.el-select-dropdown__item.selected {
-      @extend .text-#{$type};
+      color: $text-color !important;
     }
   }
 }
@@ -32,6 +52,7 @@ $box-shadow-lg: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
   padding: 0;
   margin-top: 12px;
   margin-right: 3px;
+
   &:first-child {
     margin-left: 20px;
   }
@@ -54,13 +75,13 @@ $box-shadow-lg: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
   }
 
   .el-input__inner {
-    @extend .btn-round, .btn-base;
     color: $white-color;
+    @include select-input-base($default-color, $default-states-color);
+
     &::placeholder {
       color: $white-color;
-      opacity: 1; /* Firefox */
+      opacity: 1;
     }
-
   }
 }
 
@@ -69,8 +90,8 @@ $box-shadow-lg: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
   @extend .select-card-styles;
 }
 
-@include select('info');
-@include select('primary');
-@include select('success');
-@include select('warning');
-@include select('danger');
+@include select("info", $info-color, $info-states-color, $brand-info);
+@include select("primary", $primary-color, $primary-states-color, $brand-primary);
+@include select("success", $success-color, $success-states-color, $brand-success);
+@include select("warning", $warning-color, $warning-states-color, $brand-warning);
+@include select("danger", $danger-color, $danger-states-color, $brand-danger);

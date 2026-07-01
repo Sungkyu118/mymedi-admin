@@ -1,3 +1,5 @@
+﻿@use "variables" as *;
+@use "mixins" as *;
 .navbar{
     padding-top: $navbar-padding-base;
     padding-bottom: $navbar-padding-base;
@@ -271,3 +273,4 @@
 .bg-white{
     background-color: $white-color !important;
 }
+

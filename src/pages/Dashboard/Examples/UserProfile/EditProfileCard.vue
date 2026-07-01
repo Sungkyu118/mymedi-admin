@@ -38,6 +38,7 @@
 </template>
 <script>
 import formMixin from "@/mixins/form-mixin";
+import { ensureProfileStore } from "@/store/ensure-profile-store";
 
 export default {
   name: "UserEditCard",
@@ -58,6 +59,7 @@ export default {
         return;
       }
       try {
+        await ensureProfileStore(this.$store);
         this.resetApiValidation();
         await this.$store.dispatch("profile/update", this.user);
         this.resetApiValidation();

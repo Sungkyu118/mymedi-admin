@@ -1,3 +1,5 @@
+﻿@use "variables" as *;
+@use "mixins" as *;
 .nav-pills {
 
   &.flex-column li > a {
@@ -164,3 +166,4 @@
         display: inline-flex;
     }
 }
+

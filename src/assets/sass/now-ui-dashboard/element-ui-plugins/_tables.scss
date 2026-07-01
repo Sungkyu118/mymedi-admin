@@ -1,24 +1,35 @@
-@import "../variables";
+@use "../variables" as *;
+
 // Element UI override
 
 .el-table table {
-  @extend .table;
-}
+  .btn {
+    margin: 0;
+  }
 
-.el-table {
-  thead {
-    @extend .text-primary;
+  small,
+  .small {
+    font-weight: 300;
   }
-  &.el-table--enable-row-hover .el-table__body tr:hover>td {
-    background-color: transparent;
+
+  > thead > tr > th {
+    border-bottom-width: 1px;
+    font-size: 1.45em;
+    font-weight: $font-weight-light;
+    border: 0;
   }
-  .td-total {
-    font-weight: $font-weight-bold;
-    font-size: $font-size-h5;
-    padding-top: 20px;
-    text-align: right;
+
+  > thead > tr > th,
+  > tbody > tr > th,
+  > tfoot > tr > th,
+  > thead > tr > td,
+  > tbody > tr > td,
+  > tfoot > tr > td {
+    padding: 12px 7px;
+    vertical-align: middle;
   }
-  .td-price{
+
+  .td-price {
     font-size: 26px;
     font-weight: $font-weight-light;
     margin-top: 5px;
@@ -27,20 +38,102 @@
     text-align: right;
   }
 
-  .table-actions{
-    .btn{
-      margin-right: 5px;
-      &:last-child{
-        margin-right: 0px;
-      }
-    }
+  .td-total {
+    font-weight: $font-weight-bold;
+    font-size: $font-size-h5;
+    padding-top: 20px;
+    text-align: right;
+  }
+
+  > tbody > tr {
+    position: relative;
   }
 }
 
 .el-table {
+  thead {
+    color: $brand-primary !important;
+  }
+
+  &.el-table--enable-row-hover .el-table__body tr:hover > td {
+    background-color: transparent;
+  }
+
+  .td-total {
+    font-weight: $font-weight-bold;
+    font-size: $font-size-h5;
+    padding-top: 20px;
+    text-align: right;
+  }
+
+  .td-price {
+    font-size: 26px;
+    font-weight: $font-weight-light;
+    margin-top: 5px;
+    position: relative;
+    top: 4px;
+    text-align: right;
+  }
+
+  .table-actions {
+    .btn {
+      margin-right: 5px;
+
+      &:last-child {
+        margin-right: 0px;
+      }
+    }
+  }
+
   background-color: transparent !important;
 }
 
 .table-shopping .el-table table {
-  @extend .table-shopping;
+  > thead > tr > th {
+    font-size: $font-size-h6;
+    text-transform: uppercase;
+  }
+
+  > tbody > tr > td {
+    font-size: $font-paragraph;
+
+    b {
+      display: block;
+      margin-bottom: 5px;
+    }
+  }
+
+  .td-name {
+    font-weight: $font-weight-normal;
+    font-size: 1.5em;
+    min-width: 200px;
+
+    small {
+      color: $dark-gray;
+      font-size: 0.75em;
+      font-weight: $font-weight-light;
+    }
+  }
+
+  .td-number {
+    font-weight: $font-weight-light;
+    font-size: $font-size-h4;
+    text-align: right;
+    min-width: 170px;
+
+    small {
+      margin-right: 3px;
+    }
+  }
+
+  .img-container {
+    width: 120px;
+    max-height: 160px;
+    overflow: hidden;
+    display: block;
+
+    img {
+      width: 100%;
+    }
+  }
 }

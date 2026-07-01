@@ -2,7 +2,7 @@
   <navbar :show-navbar="showNavbar">
     <div class="navbar-wrapper">
       <div class="navbar-toggle" :class="{ toggled: $sidebar.showSidebar }">
-        <navbar-toggle-button @click.native="toggleSidebar">
+        <navbar-toggle-button @click="toggleSidebar">
         </navbar-toggle-button>
       </div>
       <a class="navbar-brand" href="/examples/user-profile">
@@ -24,8 +24,8 @@
       <span class="navbar-toggler-bar navbar-kebab"></span>
     </button>
 
-    <template slot="navbar-menu"
-      ><a
+    <template #navbar-menu>
+      <a
         href="https://vue-now-ui-dashboard-laravel.creative-tim.com/documentation/#/getting-started"
         target="_blank"
         class="btn mr-2 mt-0"
@@ -84,15 +84,12 @@
   </navbar>
 </template>
 <script>
-import { RouteBreadCrumb, Navbar, NavbarToggleButton } from "src/components";
-import { CollapseTransition } from "vue2-transitions";
+import { Navbar, NavbarToggleButton } from "src/components";
 
 export default {
   components: {
-    // RouteBreadCrumb,
     Navbar,
     NavbarToggleButton,
-    //   CollapseTransition,
   },
   computed: {
     routeName() {

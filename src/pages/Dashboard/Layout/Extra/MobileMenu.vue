@@ -7,7 +7,7 @@
       </div>
     </form>
     <drop-down>
-      <template slot="title">
+      <template #title>
         <i class="nc-icon nc-planet"></i>
       </template>
       <a class="dropdown-item" href="#">Create New Post</a>
@@ -17,7 +17,7 @@
       <a class="dropdown-item" href="#">Another action</a>
     </drop-down>
     <drop-down>
-      <template slot="title">
+      <template #title>
         <i class="nc-icon nc-bell-55"></i>
         <span class="notification">5</span>
         <span class="d-lg-none">Notification</span>
@@ -30,7 +30,7 @@
     </drop-down>
 
     <drop-down>
-      <template slot="title">
+      <template #title>
         <i class="nc-icon nc-bullet-list-67"></i>
       </template>
       <a class="dropdown-item" href="#">

@@ -2,7 +2,8 @@
   <component :is="tag"
              :type="nativeType"
              class="btn"
-             :class="classes">
+             :class="classes"
+             v-bind="$attrs">
     <span class="btn-label" v-if="$slots.label">
       <slot name="label"></slot>
     </span>
@@ -14,6 +15,7 @@
 </template>
 <script>
 export default {
+  inheritAttrs: false,
   name: 'n-button',
   props: {
     tag: {

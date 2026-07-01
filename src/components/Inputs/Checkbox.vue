@@ -6,7 +6,7 @@
              class="form-check-input"
              type="checkbox"
              :disabled="disabled"
-             v-model="model"/>
+             v-model="checkedValue"/>
       <span class="form-check-sign"></span>
       <slot>
         <span v-if="inline">&nbsp;</span>
@@ -17,10 +17,9 @@
 <script>
 export default {
   name: 'n-checkbox',
-  model: {
-    prop: 'checked'
-  },
   props: {
+    modelValue: [Array, Boolean],
+    value: [Array, Boolean],
     checked: [Array, Boolean],
     disabled: Boolean,
     inline: Boolean,
@@ -33,15 +32,22 @@ export default {
     };
   },
   computed: {
-    model: {
+    checkedValue: {
       get() {
-        return this.checked;
+        if (this.modelValue !== undefined) {
+          return this.modelValue;
+        }
+        if (this.checked !== undefined) {
+          return this.checked;
+        }
+        return this.value;
       },
       set(check) {
         if (!this.touched) {
           this.touched = true;
         }
-        this.$emit('input', check);
+        this.$emit('update:modelValue', check);
+        this.$emit('change', check);
       }
     },
     inlineClass() {

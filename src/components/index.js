@@ -3,7 +3,7 @@ import IconCheckbox from './Inputs/IconCheckbox.vue';
 import Radio from './Inputs/Radio.vue';
 import FormGroupInput from './Inputs/formGroupInput.vue';
 import Switch from './Switch.vue';
-import Badge from './Badge';
+import Badge from './Badge.vue';
 import Progress from './Progress.vue';
 import Button from './Button.vue';
 
@@ -12,8 +12,8 @@ import Table from './Table.vue';
 
 import Card from './Cards/Card.vue';
 import StatsCard from './Cards/StatsCard.vue';
-import Navbar from './Navbar/Navbar';
-import NavbarToggleButton from './Navbar/NavbarToggleButton';
+import Navbar from './Navbar/Navbar.vue';
+import NavbarToggleButton from './Navbar/NavbarToggleButton.vue';
 
 import Breadcrumb from './Breadcrumb/Breadcrumb.vue';
 import BreadcrumbItem from './Breadcrumb/BreadcrumbItem.vue';
@@ -29,9 +29,9 @@ import AsyncWorldMap from './WorldMap/AsyncWorldMap.vue';
 
 import Pagination from './Pagination.vue';
 
-import SidebarPlugin from './SidebarPlugin';
+import SidebarPlugin from './SidebarPlugin/index.js';
 
-import AnimatedNumber from './AnimatedNumber';
+import AnimatedNumber from './AnimatedNumber.vue';
 
 export {
   Checkbox,

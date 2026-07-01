@@ -2,10 +2,12 @@
   <div class="row">
     <div class="col-md-12">
       <card>
-        <div slot="header">
-          <h5 class="title">Now UI Table Heading</h5>
-          <p class="category">Created using Montserrat Font Family</p>
-        </div>
+        <template #header>
+          <div>
+            <h5 class="title">Now UI Table Heading</h5>
+            <p class="category">Created using Montserrat Font Family</p>
+          </div>
+        </template>
         <div>
           <div class="typography-line">
             <h1><span>Header 1</span>The Life of Now UI Dashboard</h1>
@@ -116,5 +118,25 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
+.typography-line {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-bottom: 35px;
+  padding-left: 25%;
+}
+
+.typography-line span {
+  position: absolute;
+  left: 0;
+  bottom: 10px;
+  display: block;
+  width: 260px;
+  color: #c0c1c2;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 13px;
+  text-transform: none;
+}
 </style>

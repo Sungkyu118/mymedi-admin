@@ -4,13 +4,13 @@
     <navbar :show-navbar="showMenu">
       <div class="navbar-wrapper">
         <div class="navbar-toggle" :class="{ toggled: showMenu }">
-          <navbar-toggle-button @click.native="toggleNavbar">
+          <navbar-toggle-button @click="toggleNavbar">
           </navbar-toggle-button>
         </div>
         <a class="navbar-brand" href="/login">Now UI Dashboard</a>
       </div>
 
-      <template slot="navbar-menu">
+      <template #navbar-menu>
         <!-- <a
           href="https://www.creative-tim.com/product/vue-now-ui-dashboard-pro-laravel"
           target="_blank"
@@ -20,37 +20,37 @@
           <i class="fas fa-download mr-2"></i>Purchase now</a
         > -->
 
-        <a
-          class="nav-item"
-          tag="li"
-          href="https://www.creative-tim.com/product/vue-now-ui-dashboard-laravel"
-          style="text-decoration: none"
-          target="_blank"
-        >
-          <a class="nav-link">
-            <i class="fas fa-download mr-2"></i>Download now</a
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="https://www.creative-tim.com/product/vue-now-ui-dashboard-laravel"
+            style="text-decoration: none"
+            target="_blank"
+            rel="noopener"
           >
-        </a>
+            <i class="fas fa-download mr-2"></i>Download now
+          </a>
+        </li>
 
-        <router-link class="nav-item" tag="li" to="/dashboard">
-          <a class="nav-link">
+        <li class="nav-item">
+          <router-link class="nav-link" to="/dashboard">
             <i class="now-ui-icons design_app"></i>
             Dashboard
-          </a>
-        </router-link>
-        <router-link class="nav-item" tag="li" to="/register">
-          <a class="nav-link">
+          </router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/register">
             <i class="now-ui-icons tech_mobile"></i>
             Register
-          </a>
-        </router-link>
+          </router-link>
+        </li>
 
-        <router-link class="nav-item" tag="li" to="/login">
-          <a class="nav-link">
+        <li class="nav-item">
+          <router-link class="nav-link" to="/login">
             <i class="now-ui-icons users_circle-08"></i>
             Login
-          </a>
-        </router-link>
+          </router-link>
+        </li>
       </template>
     </navbar>
     <div class="wrapper wrapper-full-page">
@@ -62,12 +62,14 @@
       >
         <div class="content">
           <div class="container">
-            <zoom-center-transition
-              :duration="pageTransitionDuration"
-              mode="out-in"
-            >
-              <router-view></router-view>
-            </zoom-center-transition>
+            <router-view v-slot="{ Component }">
+              <zoom-center-transition
+                :duration="pageTransitionDuration"
+                mode="out-in"
+              >
+                <component :is="Component"></component>
+              </zoom-center-transition>
+            </router-view>
           </div>
         </div>
         <footer class="footer">
@@ -145,8 +147,9 @@
   </div>
 </template>
 <script>
+import "@/assets/styles/app-shell.scss";
 import { Navbar, NavbarToggleButton } from "src/components";
-import { ZoomCenterTransition } from "vue2-transitions";
+import { ZoomCenterTransition } from "src/components/Transitions";
 
 export default {
   components: {
@@ -182,7 +185,7 @@ export default {
       this.pageClass = `${this.$route.name}-page`.toLowerCase();
     },
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.closeMenu();
   },
   beforeRouteUpdate(to, from, next) {

@@ -1,6 +1,8 @@
 <template>
   <card>
-    <h5 slot="header" class="title">Edit Profile</h5>
+    <template #header>
+      <h5 class="title">Edit Profile</h5>
+    </template>
     <form>
       <div class="row">
         <div class="col-md-5">

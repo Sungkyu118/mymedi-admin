@@ -2,9 +2,11 @@
   <div class="row">
     <div class="col-md-12">
       <card card-body-classes="table-full-width">
-        <div slot="header">
-          <h4 class="card-title">Striped table</h4>
-        </div>
+        <template #header>
+          <div>
+            <h4 class="card-title">Striped table</h4>
+          </div>
+        </template>
         <el-table :data="tableData">
           <el-table-column min-width="150" label="Name" property="name"></el-table-column>
           <el-table-column min-width="150" label="Country" property="country"></el-table-column>
@@ -16,9 +18,11 @@
 
     <div class="col-md-12">
       <card class="card-plain" card-body-classes="table-full-width">
-        <div slot="header">
-          <h4 class="card-title">Table on Plain Background</h4>
-        </div>
+        <template #header>
+          <div>
+            <h4 class="card-title">Table on Plain Background</h4>
+          </div>
+        </template>
         <el-table header-cell-class-name="table-transparent"
                   header-row-class-name="table-transparent"
                   row-class-name="table-transparent"
@@ -33,9 +37,11 @@
 
     <div class="col-md-12">
       <card card-body-classes="table-full-width">
-        <div slot="header">
-          <h4 class="card-title">Regular Table with Colors</h4>
-        </div>
+        <template #header>
+          <div>
+            <h4 class="card-title">Regular Table with Colors</h4>
+          </div>
+        </template>
         <el-table :row-class-name="tableRowClassName"
                   :data="tableData">
           <el-table-column min-width="150" label="Name" property="name"></el-table-column>
@@ -49,7 +55,7 @@
   </div>
 </template>
 <script>
-import { Table, TableColumn } from 'element-ui';
+import { Table, TableColumn } from '@/ui/element-table';
 
 export default {
   components: {

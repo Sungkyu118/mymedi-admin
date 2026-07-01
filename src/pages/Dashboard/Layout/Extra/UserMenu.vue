@@ -41,7 +41,8 @@
   </div>
 </template>
 <script>
-import { CollapseTransition } from "vue2-transitions";
+import { CollapseTransition } from "src/components/Transitions";
+import { ensureProfileStore } from "src/store/ensure-profile-store";
 
 export default {
   name: "user-menu",
@@ -60,9 +61,14 @@ export default {
   // },
 
   async created() {
+    await ensureProfileStore(this.$store);
+
     this.$store.watch(
       () => this.$store.getters["profile/me"],
       (me) => {
+        if (!me) {
+          return;
+        }
         this.title = me.name;
         this.avatar = me.profile_image
           ? me.profile_image

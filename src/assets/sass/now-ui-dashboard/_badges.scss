@@ -1,3 +1,7 @@
+﻿@use "variables" as *;
+@use "mixins" as *;
+@use "sass:color";
+
 /*           badges             */
 .badge{
     border-radius: 8px;
@@ -48,30 +52,31 @@
 
 .badge-primary[href]:focus,
 .badge-primary[href]:hover{
-  @include badge-hover-href($white-color, darken($primary-color, 3%));
+  @include badge-hover-href($white-color, color.adjust($primary-color, $lightness: -3%));
 }
 
 .badge-warning[href]:focus,
 .badge-warning[href]:hover{
-  @include badge-hover-href($white-color, darken($warning-color, 3%));
+  @include badge-hover-href($white-color, color.adjust($warning-color, $lightness: -3%));
 }
 
 .badge-info[href]:focus,
 .badge-info[href]:hover{
-  @include badge-hover-href($white-color, darken($info-color, 3%));
+  @include badge-hover-href($white-color, color.adjust($info-color, $lightness: -3%));
 }
 
 .badge-danger[href]:focus,
 .badge-danger[href]:hover{
-  @include badge-hover-href($white-color, darken($danger-color, 3%));
+  @include badge-hover-href($white-color, color.adjust($danger-color, $lightness: -3%));
 }
 
 .badge-success[href]:focus,
 .badge-success[href]:hover{
-  @include badge-hover-href($white-color, darken($success-color, 3%));
+  @include badge-hover-href($white-color, color.adjust($success-color, $lightness: -3%));
 }
 
 .badge-default[href]:focus,
 .badge-default[href]:hover{
-  @include badge-hover-href($white-color, darken($default-color, 3%));
+  @include badge-hover-href($white-color, color.adjust($default-color, $lightness: -3%));
 }
+

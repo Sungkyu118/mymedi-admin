@@ -6,7 +6,7 @@
              type="radio"
              :disabled="disabled"
              :value="label"
-             v-model="model" />
+             v-model="selectedValue" />
       <span class="form-check-sign">
       </span>
       <slot></slot>
@@ -19,6 +19,7 @@ export default {
   props: {
     label: [String, Number],
     disabled: Boolean,
+    modelValue: [String, Boolean, Number],
     value: [String, Boolean],
     inline: Boolean
   },
@@ -28,12 +29,16 @@ export default {
     };
   },
   computed: {
-    model: {
+    selectedValue: {
       get() {
+        if (this.modelValue !== undefined) {
+          return this.modelValue;
+        }
         return this.value;
       },
       set(value) {
-        this.$emit('input', value);
+        this.$emit('update:modelValue', value);
+        this.$emit('change', value);
       }
     },
     inlineClass() {

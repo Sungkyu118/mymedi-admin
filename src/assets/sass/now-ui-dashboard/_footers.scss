@@ -1,3 +1,5 @@
+﻿@use "variables" as *;
+@use "mixins" as *;
 .footer{
     padding: 24px 0;
 
@@ -44,3 +46,4 @@
         content: " ";
     }
 }
+

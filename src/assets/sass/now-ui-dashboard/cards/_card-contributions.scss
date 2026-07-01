@@ -1,5 +1,9 @@
+@use "../variables" as *;
+
 .card-contributions{
-  @extend %card-stats;
+  hr{
+    margin: 5px 15px;
+  }
 
   .card-description{
     max-width: 350px;
@@ -38,5 +42,4 @@
     text-align: left;
     max-width: 125px;
   }
-
 }

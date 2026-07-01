@@ -1,3 +1,5 @@
+﻿@use "variables" as *;
+@use "mixins" as *;
 .popover{
     font-size: $font-size-base;
     box-shadow: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
@@ -80,3 +82,4 @@
     color: inherit;
     box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
 }
+

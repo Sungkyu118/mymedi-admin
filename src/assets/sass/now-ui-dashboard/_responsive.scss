@@ -1,3 +1,5 @@
+﻿@use "variables" as *;
+@use "mixins" as *;
 @media screen and (max-width: 991px){
     .profile-photo .profile-photo-small{
         margin-left: -2px;
@@ -370,3 +372,4 @@
         }
     }
 }
+

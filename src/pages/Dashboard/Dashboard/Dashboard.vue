@@ -67,28 +67,31 @@
     <div class="row">
       <div class="col-lg-4">
         <card class="card-chart" no-footer-line>
-          <div slot="header">
-            <h5 class="card-category">Active Users</h5>
-            <h2 class="card-title">
-              <animated-number :value="34252"></animated-number>
-            </h2>
-            <drop-down :hide-arrow="true" position="right">
-              <n-button
-                  slot="title"
-                  class="dropdown-toggle no-caret"
-                  round
-                  simple
-                  icon
-              >
-                <i class="now-ui-icons loader_gear"></i>
-              </n-button>
+          <template #header>
+            <div>
+              <h5 class="card-category">Active Users</h5>
+              <h2 class="card-title">
+                <animated-number :value="34252"></animated-number>
+              </h2>
+              <drop-down :hide-arrow="true" position="right">
+                <template #title>
+                  <n-button
+                      class="dropdown-toggle no-caret"
+                      round
+                      simple
+                      icon
+                  >
+                    <i class="now-ui-icons loader_gear"></i>
+                  </n-button>
+                </template>
 
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <a class="dropdown-item text-danger" href="#">Remove Data</a>
-            </drop-down>
-          </div>
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+                <a class="dropdown-item text-danger" href="#">Remove Data</a>
+              </drop-down>
+            </div>
+          </template>
           <div class="chart-area">
             <line-chart
                 :labels="charts.activeUsers.labels"
@@ -100,7 +103,7 @@
           </div>
           <div class="table-responsive">
             <n-table :data="tableData">
-              <template slot-scope="{ row }">
+              <template #default="{ row }">
                 <td>
                   <div class="flag">
                     <img :src="row.flag"/>
@@ -116,36 +119,41 @@
               </template>
             </n-table>
           </div>
-          <div slot="footer" class="stats">
-            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-          </div>
+          <template #footer>
+            <div class="stats">
+              <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+            </div>
+          </template>
         </card>
       </div>
 
       <div class="col-lg-4">
         <card class="card-chart" no-footer-line>
-          <div slot="header">
-            <h5 class="card-category">Summer Email Campaign</h5>
-            <h2 class="card-title">
-              <animated-number :value="55300"></animated-number>
-            </h2>
-            <drop-down position="right">
-              <n-button
-                  slot="title"
-                  class="dropdown-toggle no-caret"
-                  round
-                  simple
-                  icon
-              >
-                <i class="now-ui-icons loader_gear"></i>
-              </n-button>
+          <template #header>
+            <div>
+              <h5 class="card-category">Summer Email Campaign</h5>
+              <h2 class="card-title">
+                <animated-number :value="55300"></animated-number>
+              </h2>
+              <drop-down position="right">
+                <template #title>
+                  <n-button
+                      class="dropdown-toggle no-caret"
+                      round
+                      simple
+                      icon
+                  >
+                    <i class="now-ui-icons loader_gear"></i>
+                  </n-button>
+                </template>
 
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <a class="dropdown-item text-danger" href="#">Remove Data</a>
-            </drop-down>
-          </div>
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+                <a class="dropdown-item text-danger" href="#">Remove Data</a>
+              </drop-down>
+            </div>
+          </template>
           <div class="chart-area">
             <line-chart
                 :labels="charts.emailsCampaign.labels"
@@ -186,20 +194,24 @@
                 show-value
             ></n-progress>
           </div>
-          <div slot="footer" class="stats">
-            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-          </div>
+          <template #footer>
+            <div class="stats">
+              <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+            </div>
+          </template>
         </card>
       </div>
 
       <div class="col-lg-4">
         <card class="card-chart" no-footer-line>
-          <div slot="header">
-            <h5 class="card-category">Active Countries</h5>
-            <h2 class="card-title">
-              <animated-number :value="105"></animated-number>
-            </h2>
-          </div>
+          <template #header>
+            <div>
+              <h5 class="card-category">Active Countries</h5>
+              <h2 class="card-title">
+                <animated-number :value="105"></animated-number>
+              </h2>
+            </div>
+          </template>
           <div class="chart-area">
             <line-chart
                 :labels="charts.activeCountries.labels"
@@ -212,19 +224,23 @@
 
           <async-world-map class="map" :data="mapData"></async-world-map>
 
-          <div slot="footer" class="stats">
-            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-          </div>
+          <template #footer>
+            <div class="stats">
+              <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+            </div>
+          </template>
         </card>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
         <card>
-          <h4 slot="header" class="card-title">Best Selling Products</h4>
+          <template #header>
+            <h4 class="card-title">Best Selling Products</h4>
+          </template>
           <div class="table-responsive">
             <n-table class="table-shopping" :data="productsTable">
-              <template slot="columns">
+              <template #columns>
                 <th class="text-center"></th>
                 <th>Product</th>
                 <th>Color</th>
@@ -233,7 +249,7 @@
                 <th class="text-right">Qty</th>
                 <th class="text-right">Amount</th>
               </template>
-              <template slot-scope="{ row }">
+              <template #default="{ row }">
                 <td>
                   <div class="img-container">
                     <img :src="row.image" alt="..."/>
@@ -258,7 +274,7 @@
                   {{ row.amount }}
                 </td>
               </template>
-              <template slot="summary-row">
+              <template #summary-row>
                 <td colspan="5"></td>
                 <td class="td-total">Total</td>
                 <td class="td-price">
@@ -283,8 +299,12 @@ import {
   AsyncWorldMap,
 } from "src/components";
 
-import LineChart from "src/components/Charts/LineChart";
 import axios from "axios";
+
+const LineChart = () =>
+  import(
+    /* webpackChunkName: "dashboard-charts" */ "src/components/Charts/LineChart.vue"
+  );
 
 export default {
   components: {
@@ -426,10 +446,7 @@ export default {
   },
   methods: {
     test() {
-      axios.get("http://localhost:8888/api/disease").then((response) => {
-        console.log(response)
-
-      })
+      axios.get("http://localhost:8888/api/disease")
     }
   }
 };

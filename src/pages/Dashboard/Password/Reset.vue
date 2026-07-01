@@ -26,11 +26,13 @@
             </fg-input>
           </div>
 
-          <div slot="footer">
-            <n-button native-type="submit" type="primary" round block>
-              Send Password Reset Link
-            </n-button>
-          </div>
+          <template #footer>
+            <div>
+              <n-button native-type="submit" type="primary" round block>
+                Send Password Reset Link
+              </n-button>
+            </div>
+          </template>
         </card>
       </form>
     </div>
@@ -38,6 +40,7 @@
 </template>
 <script>
 import formMixin from "@/mixins/form-mixin";
+import { APP_BASE_URL } from "@/env";
 export default {
   mixins: [formMixin],
   name: "login",
@@ -48,7 +51,7 @@ export default {
           type: "password-forgot",
           attributes: {
             email: "",
-            redirect_url: process.env.VUE_APP_BASE_URL + "/password/email",
+            redirect_url: `${APP_BASE_URL}/password/email`,
           },
         },
       },

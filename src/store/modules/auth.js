@@ -1,23 +1,11 @@
-import Vue from "vue";
 import routes from "@/routes";
-import { VueAuthenticate } from "vue-authenticate";
+import authService from "../services/auth-service";
 
-import axios from "axios";
-import VueAxios from "vue-axios";
-Vue.use(VueAxios, axios);
-
-const vueAuth = new VueAuthenticate(Vue.prototype.$http, {
-  baseUrl: process.env.VUE_APP_API_BASE_URL,
-  tokenName: "access_token",
-  loginUrl: "/login",
-  registerUrl: "/register"
-});
+authService.initialize();
 
 export default {
   state: {
-    // isAuthenticated: localStorage.getItem("vue-authenticate.vueauth_access_token") !== null
-    
-    isAuthenticated: true
+    isAuthenticated: authService.isAuthenticated()
   },
 
   getters: {
@@ -27,38 +15,30 @@ export default {
   },
 
   mutations: {
-    isAuthenticated(state, payload) {
-      state.isAuthenticated = payload.isAuthenticated;
+    SET_AUTHENTICATED(state, isAuthenticated) {
+      state.isAuthenticated = isAuthenticated;
     }
   },
 
   actions: {
-    login(context, payload) {
-      console.log(payload)
-      return vueAuth.login(payload.user, payload.requestOptions).then(response => {
-        context.commit("isAuthenticated", {
-          isAuthenticated: vueAuth.isAuthenticated()
-        });
-        routes.push({name: "Dashboard"});
-      });
+    async login({ commit }, payload) {
+      const response = await authService.login(payload.user, payload.requestOptions);
+      commit("SET_AUTHENTICATED", authService.isAuthenticated());
+      routes.push({ name: "Dashboard" });
+      return response;
     },
 
-    register(context, payload) {
-      return vueAuth.register(payload.user, payload.requestOptions).then(response => {
-        context.commit("isAuthenticated", {
-          isAuthenticated: vueAuth.isAuthenticated()
-        });
-        routes.push({name: "Home"});
-      });
+    async register({ commit }, payload) {
+      const response = await authService.register(payload.user, payload.requestOptions);
+      commit("SET_AUTHENTICATED", authService.isAuthenticated());
+      routes.push({ name: "Home" });
+      return response;
     },
 
-    logout(context, payload) {
-      return vueAuth.logout().then(response => {
-        context.commit("isAuthenticated", {
-          isAuthenticated: vueAuth.isAuthenticated()
-        });
-        routes.push({name: "Login"});
-      });
+    async logout({ commit }) {
+      await authService.logout();
+      commit("SET_AUTHENTICATED", authService.isAuthenticated());
+      routes.push({ name: "Login" });
     }
   }
 };

@@ -16,7 +16,7 @@
   </nav>
 </template>
 <script>
-import { CollapseTransition } from 'vue2-transitions';
+import { CollapseTransition } from "src/components/Transitions";
 
 export default {
   name: 'navbar',

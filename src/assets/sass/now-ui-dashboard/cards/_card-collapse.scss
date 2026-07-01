@@ -1,3 +1,6 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
 .card-collapse{
     .card{
         margin-bottom: 25px;
@@ -17,7 +20,7 @@
                     position: relative;
                     color: #f96332;
                     top: 1px;
-                    @extend .animation-transition-general;
+                    @include transition($general-transition-time, $transition-ease);
                 }
             }
 

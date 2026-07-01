@@ -18,6 +18,7 @@
 import UserEditCard from "@/pages/Dashboard/Examples/UserProfile/EditProfileCard.vue";
 import UserPasswordCard from "@/pages/Dashboard/Examples/UserProfile/EditPasswordCard.vue";
 import UserCard from "@/pages/Dashboard/Pages/UserProfile/UserCard.vue";
+import { ensureProfileStore } from "@/store/ensure-profile-store";
 
 export default {
   name: "user-profile-example",
@@ -45,6 +46,7 @@ export default {
 
   methods: {
     async getProfile() {
+      await ensureProfileStore(this.$store);
       await this.$store.dispatch("profile/me");
       this.user = await this.$store.getters["profile/me"];
     },

@@ -8,7 +8,10 @@
 </template>
 
 <script>
-import HeaderChart from './HeaderChart';
+const HeaderChart = () =>
+  import(
+    /* webpackChunkName: "dashboard-header-chart" */ "./HeaderChart.vue"
+  );
 
 export default {
   name: 'overview-header',

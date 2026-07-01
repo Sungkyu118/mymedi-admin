@@ -15,7 +15,9 @@
         >
       </div>
       <card card-body-classes="table-full-width" no-footer-line>
-        <h4 slot="header" class="card-title">Users List</h4>
+        <template #header>
+          <h4 class="card-title">Users List</h4>
+        </template>
         <div
           class="col-12 text-right"
           style="margin-bottom: 10px; margin-top: -50px"
@@ -23,7 +25,7 @@
           <n-button
             type="primary"
             class="btn btn-sm btn-primary"
-            @click.native="onProFeature()"
+            @click="onProFeature()"
           >
             <span>Add User</span>
           </n-button>
@@ -43,58 +45,58 @@
             </el-table-column>
 
             <el-table-column :min-width="135" fixed="right" label="Actions">
-              <div
-                slot-scope="{ row }"
-                class="table-actions"
-                style="margin-left: 10px"
-              >
-                <el-tooltip content="Edit" :open-delay="300" placement="top">
-                  <n-button
-                    @click.native="onProFeature()"
-                    type="info"
-                    size="sm"
-                    round
-                    icon
-                  >
-                    <i class="now-ui-icons ui-2_settings-90"></i>
-                  </n-button>
-                </el-tooltip>
+              <template #default="{ row }">
+                <div class="table-actions" style="margin-left: 10px">
+                  <el-tooltip content="Edit" :open-delay="300" placement="top">
+                    <n-button
+                      @click="onProFeature()"
+                      type="info"
+                      size="sm"
+                      round
+                      icon
+                    >
+                      <i class="now-ui-icons ui-2_settings-90"></i>
+                    </n-button>
+                  </el-tooltip>
 
-                <el-tooltip content="Delete" :open-delay="300" placement="top">
-                  <n-button
-                    @click.native="onProFeature()"
-                    class="remove"
-                    type="danger"
-                    size="sm"
-                    round
-                    icon
-                  >
-                    <i class="fa fa-times"></i>
-                  </n-button>
-                </el-tooltip>
-              </div>
+                  <el-tooltip content="Delete" :open-delay="300" placement="top">
+                    <n-button
+                      @click="onProFeature()"
+                      class="remove"
+                      type="danger"
+                      size="sm"
+                      round
+                      icon
+                    >
+                      <i class="fa fa-times"></i>
+                    </n-button>
+                  </el-tooltip>
+                </div>
+              </template>
             </el-table-column>
           </el-table>
         </div>
-        <div slot="footer" class="card-footer d-flex justify-content-end">
-          <n-pagination class="pagination-no-border" :total="total">
-          </n-pagination>
-        </div>
+        <template #footer>
+          <div class="card-footer d-flex justify-content-end">
+            <n-pagination class="pagination-no-border" :total="total">
+            </n-pagination>
+          </div>
+        </template>
       </card>
     </div>
   </div>
 </template>
 <script>
-import { Table, TableColumn, Select, Option } from "element-ui";
+import { Table, TableColumn } from "@/ui/element-table";
+import { Tooltip } from "@/ui/element-tooltip";
 import { Pagination as NPagination } from "src/components";
 
 export default {
   components: {
     NPagination,
-    [Select.name]: Select,
-    [Option.name]: Option,
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
+    [Tooltip.name]: Tooltip,
   },
   data() {
     return {

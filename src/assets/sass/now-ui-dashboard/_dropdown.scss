@@ -1,3 +1,7 @@
+﻿@use "variables" as *;
+@use "mixins" as *;
+@use "sass:color";
+
 .dropdown-menu{
     border: 0;
     box-shadow: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
@@ -123,23 +127,23 @@
     }
 
     &.dropdown-primary{
-        @include dropdown-colors(darken($primary-color, 3%),$opacity-8,$white-color, $opacity-2);
+        @include dropdown-colors(color.adjust($primary-color, $lightness: -3%),$opacity-8,$white-color, $opacity-2);
     }
 
     &.dropdown-info{
-        @include dropdown-colors(darken($info-color, 3%),$opacity-8,$white-color, $opacity-2);
+        @include dropdown-colors(color.adjust($info-color, $lightness: -3%),$opacity-8,$white-color, $opacity-2);
     }
 
     &.dropdown-danger{
-        @include dropdown-colors(darken($danger-color, 3%),$opacity-8,$white-color, $opacity-2);
+        @include dropdown-colors(color.adjust($danger-color, $lightness: -3%),$opacity-8,$white-color, $opacity-2);
     }
 
     &.dropdown-success{
-        @include dropdown-colors(darken($success-color, 3%),$opacity-8,$white-color, $opacity-2);
+        @include dropdown-colors(color.adjust($success-color, $lightness: -3%),$opacity-8,$white-color, $opacity-2);
     }
 
     &.dropdown-warning{
-        @include dropdown-colors(darken($warning-color, 3%),$opacity-8,$white-color, $opacity-2);
+        @include dropdown-colors(color.adjust($warning-color, $lightness: -3%),$opacity-8,$white-color, $opacity-2);
     }
 
     .dropdown &,
@@ -204,3 +208,4 @@
         }
     }
 }
+

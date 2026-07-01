@@ -1,7 +1,6 @@
 <template>
   <div class="notifications">
-    <transition-group :name="transitionName"
-                      :mode="transitionMode">
+    <transition-group :name="transitionName">
       <notification
         v-for="notification in notifications"
         v-bind="notification"

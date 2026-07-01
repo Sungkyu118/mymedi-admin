@@ -1,3 +1,5 @@
+﻿@use "variables" as *;
+@use "mixins" as *;
 .login-page,
 .register-page,
 .pricing-page,
@@ -139,3 +141,4 @@
         }
     }
 }
+

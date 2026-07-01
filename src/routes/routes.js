@@ -1,20 +1,38 @@
-import DashboardLayout from "src/pages/Dashboard/Layout/DashboardLayout.vue";
-import AuthLayout from "src/pages/Dashboard/Pages/AuthLayout.vue";
+const DashboardLayout = () =>
+  import(
+    /* webpackChunkName: "layout-dashboard" */ "src/pages/Dashboard/Layout/DashboardLayout.vue"
+  );
+const AuthLayout = () =>
+  import(
+    /* webpackChunkName: "layout-auth" */ "src/pages/Dashboard/Pages/AuthLayout.vue"
+  );
 // GeneralViews
-import NotFound from "src/pages/GeneralViews/NotFoundPage.vue";
+const NotFound = () =>
+  import(
+    /* webpackChunkName: "not-found" */ "src/pages/GeneralViews/NotFoundPage.vue"
+  );
 
 // Page Headers
 const DashboardHeader = () =>
   import(
-    /* webpackChunkName: "dashboard" */ "src/pages/Dashboard/Dashboard/DashboardHeader.vue"
+    /* webpackChunkName: "dashboard-header" */ "src/pages/Dashboard/Dashboard/DashboardHeader.vue"
   );
-import DefaultHeader from "src/pages/Dashboard/DefaultHeader";
+const DefaultHeader = () =>
+  import(
+    /* webpackChunkName: "dashboard-default-header" */ "src/pages/Dashboard/DefaultHeader.vue"
+  );
 
 // Example pages
-import UserProfile from "@/pages/Dashboard/Examples/UserProfile.vue";
+const UserProfile = () =>
+  import(
+    /* webpackChunkName: "examples" */ "@/pages/Dashboard/Examples/UserProfile.vue"
+  );
 
 // User Management
-import ListUserPage from "@/pages/Dashboard/Examples/UserManagement/ListUserPage.vue";
+const ListUserPage = () =>
+  import(
+    /* webpackChunkName: "examples" */ "@/pages/Dashboard/Examples/UserManagement/ListUserPage.vue"
+  );
 
 
 
@@ -192,7 +210,7 @@ const routes = [
     path: "/",
     component: DashboardLayout,
     redirect: "/dashboard",
-    name: "Dashboard",
+    name: "DashboardRoot",
     children: [
       {
         path: "dashboard",
@@ -203,7 +221,7 @@ const routes = [
 
     ],
   },
-  { path: "*", component: NotFound },
+  { path: "/:pathMatch(.*)*", component: NotFound },
 ];
 
 export default routes;

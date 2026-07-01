@@ -43,7 +43,7 @@
     <div class="col-lg-4 mr-auto">
       <form role="form" @submit.prevent="handleSubmit">
         <card class="card-signup text-center" no-footer-line>
-          <template slot="header">
+          <template #header>
             <h4 class="card-title">Register</h4>
             <div class="social">
               <button class="btn btn-icon btn-round btn-twitter">
@@ -101,15 +101,16 @@
             I agree to the <a href="#something">terms and conditions</a>.
           </checkbox>
 
-          <n-button
-            slot="footer"
-            type="primary"
-            native-type="submit"
-            round
-            size="lg"
-          >
-            Get Started
-          </n-button>
+          <template #footer>
+            <n-button
+              type="primary"
+              native-type="submit"
+              round
+              size="lg"
+            >
+              Get Started
+            </n-button>
+          </template>
         </card>
       </form>
     </div>

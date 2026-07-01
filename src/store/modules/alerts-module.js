@@ -1,10 +1,12 @@
+import { notify } from "../../components/NotificationPlugin/notification-service";
+
 const state = {};
 
 const mutations = {};
 
 const actions = {
   success({ commit, dispatch }, message) {
-    this.$app.$notify({
+    notify({
       message: message,
       icon: "now-ui-icons ui-1_bell-53",
       type: "success",
@@ -12,7 +14,7 @@ const actions = {
   },
 
   error({ commit, dispatch }, message) {
-    this.$app.$notify({
+    notify({
       message: message,
       icon: "now-ui-icons ui-1_bell-53",
       type: "danger",

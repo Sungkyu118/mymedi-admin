@@ -3,11 +3,13 @@
   </div>
 </template>
 <script>
-import Vue from 'vue';
-import { Loading } from 'element-ui';
+import { Loading } from '@/ui/element-loading';
 
-Vue.use(Loading.directive);
-export default {};
+export default {
+  directives: {
+    loading: Loading.directive
+  }
+};
 </script>
 <style>
 #loading {

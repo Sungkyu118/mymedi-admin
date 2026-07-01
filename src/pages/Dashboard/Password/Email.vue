@@ -38,11 +38,13 @@
             </fg-input>
           </div>
 
-          <div slot="footer">
-            <n-button native-type="submit" type="primary" round block>
-              Reset Password
-            </n-button>
-          </div>
+          <template #footer>
+            <div>
+              <n-button native-type="submit" type="primary" round block>
+                Reset Password
+              </n-button>
+            </div>
+          </template>
         </card>
       </form>
     </div>
@@ -74,11 +76,14 @@ export default {
     this.form.data.attributes.token = this.$route.query.token;
   },
 
-  beforeDestroy() {
-    this.$router.replace({ query: null });
+  beforeUnmount() {
+    this.clearResetQuery();
   },
 
   methods: {
+    clearResetQuery() {
+      this.$router.replace({ query: null });
+    },
     async handleSubmit() {
       try {
         await this.$store.dispatch("reset/createNewPassword", this.form.data);

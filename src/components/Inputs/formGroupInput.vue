@@ -23,12 +23,14 @@
     </slot>
     <slot>
       <input
-        :value="value"
-        v-on="listeners"
+        :value="inputValue"
         v-bind="$attrs"
         class="form-control"
-        :class="[{ valid: value && !error }, inputClasses]"
+        :class="[{ valid: inputValue && !error }, inputClasses]"
         aria-describedby="addon-right addon-left"
+        @input="updateValue"
+        @focus="onFocus"
+        @blur="onBlur"
       />
     </slot>
     <slot name="addonRight">
@@ -60,6 +62,7 @@ export default {
     error: Array,
     labelClasses: String,
     inputClasses: String,
+    modelValue: [String, Number],
     value: [String, Number],
     addonRightIcon: String,
     addonLeftIcon: String,
@@ -71,13 +74,8 @@ export default {
     };
   },
   computed: {
-    listeners() {
-      return {
-        ...this.$listeners,
-        input: this.updateValue,
-        focus: this.onFocus,
-        blur: this.onBlur,
-      };
+    inputValue() {
+      return this.modelValue ?? this.value ?? "";
     },
     hasIcon() {
       const { addonRight, addonLeft } = this.$slots;
@@ -91,19 +89,20 @@ export default {
   },
   methods: {
     updateValue(evt) {
-      let value = evt.target.value;
+      const value = evt.target.value;
       if (!this.touched && value) {
         this.touched = true;
       }
+      this.$emit("update:modelValue", value);
       this.$emit("input", value);
     },
-    onFocus(value) {
+    onFocus(evt) {
       this.focused = true;
-      this.$emit("focus", value);
+      this.$emit("focus", evt);
     },
-    onBlur(value) {
+    onBlur(evt) {
       this.focused = false;
-      this.$emit("blur", value);
+      this.$emit("blur", evt);
     },
   },
 };

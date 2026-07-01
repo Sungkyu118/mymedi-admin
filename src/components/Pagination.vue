@@ -1,6 +1,6 @@
 <template>
   <ul class="pagination" :class="paginationClass">
-    <li class="page-item prev-page" :class="{disabled: value === 1}">
+    <li class="page-item prev-page" :class="{disabled: currentPage === 1}">
       <a class="page-link" aria-label="Previous" @click="prevPage">
         «
       </a>
@@ -8,10 +8,10 @@
     <li class="page-item"
         v-for="item in range(minPage, maxPage)"
         :key="item"
-        :class="{active: value === item}">
+        :class="{active: currentPage === item}">
       <a class="page-link" @click="changePage(item)">{{item}}</a>
     </li>
-    <li class="page-item page-pre next-page" :class="{disabled: value === totalPages}">
+    <li class="page-item page-pre next-page" :class="{disabled: currentPage === totalPages}">
       <a class="page-link" aria-label="Next" @click="nextPage">
         »
       </a>
@@ -48,12 +48,22 @@ export default {
       type: Number,
       default: 0
     },
+    modelValue: {
+      type: Number,
+      default: undefined
+    },
     value: {
       type: Number,
       default: 1
     }
   },
   computed: {
+    currentPage() {
+      if (this.modelValue !== undefined) {
+        return this.modelValue;
+      }
+      return this.value;
+    },
     paginationClass() {
       return `pagination-${this.type}`;
     },
@@ -71,21 +81,21 @@ export default {
       return this.defaultPagesToDisplay;
     },
     minPage() {
-      if (this.value >= this.pagesToDisplay) {
+      if (this.currentPage >= this.pagesToDisplay) {
         const pagesToAdd = Math.floor(this.pagesToDisplay / 2);
-        const newMaxPage = pagesToAdd + this.value;
+        const newMaxPage = pagesToAdd + this.currentPage;
         if (newMaxPage > this.totalPages) {
           return this.totalPages - this.pagesToDisplay + 1;
         }
-        return this.value - pagesToAdd;
+        return this.currentPage - pagesToAdd;
       } else {
         return 1;
       }
     },
     maxPage() {
-      if (this.value >= this.pagesToDisplay) {
+      if (this.currentPage >= this.pagesToDisplay) {
         const pagesToAdd = Math.floor(this.pagesToDisplay / 2);
-        const newMaxPage = pagesToAdd + this.value;
+        const newMaxPage = pagesToAdd + this.currentPage;
         if (newMaxPage < this.totalPages) {
           return newMaxPage;
         } else {
@@ -102,6 +112,10 @@ export default {
     };
   },
   methods: {
+    emitPage(value) {
+      this.$emit('update:modelValue', value);
+      this.$emit('change', value);
+    },
     range(min, max) {
       let arr = [];
       for (let i = min; i <= max; i++) {
@@ -110,25 +124,25 @@ export default {
       return arr;
     },
     changePage(item) {
-      this.$emit('input', item);
+      this.emitPage(item);
     },
     nextPage() {
-      if (this.value < this.totalPages) {
-        this.$emit('input', this.value + 1);
+      if (this.currentPage < this.totalPages) {
+        this.emitPage(this.currentPage + 1);
       }
     },
     prevPage() {
-      if (this.value > 1) {
-        this.$emit('input', this.value - 1);
+      if (this.currentPage > 1) {
+        this.emitPage(this.currentPage - 1);
       }
     }
   },
   watch: {
     perPage() {
-      this.$emit('input', 1);
+      this.emitPage(1);
     },
     total() {
-      this.$emit('input', 1);
+      this.emitPage(1);
     }
   }
 };

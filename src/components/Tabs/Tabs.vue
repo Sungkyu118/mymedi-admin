@@ -44,13 +44,16 @@
 </template>
 
 <script>
+import { h } from "vue";
+
 export default {
   name: 'tabs',
   components: {
     TabItemContent: {
       props: ['tab'],
-      render(h) {
-        return h('div', [this.tab.$slots.label || this.tab.label]);
+      render() {
+        const labelSlot = this.tab.$slots.label;
+        return h('div', labelSlot ? labelSlot() : this.tab.label);
       }
     }
   },
@@ -94,11 +97,8 @@ export default {
     vertical: Boolean,
     square: Boolean,
     centered: Boolean,
-    value: String
-  },
-  model: {
-    prop: 'value',
-    event: 'change'
+    value: String,
+    modelValue: String
   },
   data() {
     return {
@@ -118,6 +118,7 @@ export default {
       }
       this.deactivateTabs();
       tab.active = true;
+      this.$emit('update:modelValue', tab.label);
       this.$emit('change', tab.label)
     },
     deactivateTabs() {
@@ -126,14 +127,29 @@ export default {
       });
     },
     addTab(tab) {
-      const index = this.$slots.default.indexOf(tab.$vnode);
+      this.tabs.push(tab);
+      this.tabs.sort((left, right) => {
+        if (!left.$el || !right.$el || left === right) {
+          return 0;
+        }
+
+        const position = left.$el.compareDocumentPosition(right.$el);
+        if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
+          return -1;
+        }
+        if (position & Node.DOCUMENT_POSITION_PRECEDING) {
+          return 1;
+        }
+        return 0;
+      });
+
+      const index = this.tabs.indexOf(tab);
       if (!this.activeTab && index === 0) {
         tab.active = true;
       }
       if (this.activeTab === tab.name) {
         tab.active = true;
       }
-      this.tabs.splice(index, 0, tab);
     },
     removeTab(tab) {
       const tabs = this.tabs;
@@ -145,13 +161,21 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      if (this.value) {
-        this.findAndActivateTab(this.value);
+      if (this.currentValue) {
+        this.findAndActivateTab(this.currentValue);
       }
     });
   },
+  computed: {
+    currentValue() {
+      if (this.modelValue !== undefined) {
+        return this.modelValue;
+      }
+      return this.value;
+    }
+  },
   watch: {
-    value(newVal) {
+    currentValue(newVal) {
       this.findAndActivateTab(newVal);
     }
   }

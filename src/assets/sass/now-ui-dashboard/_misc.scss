@@ -1,3 +1,5 @@
+﻿@use "variables" as *;
+@use "mixins" as *;
 body{
     color: $black-color;
     font-size: $font-size-base;
@@ -73,3 +75,4 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 .pull-right{
   float: right;
 }
+

@@ -1,3 +1,4 @@
+﻿@use "../variables" as *;
 @mixin linear-gradient($color1, $color2){
     background: $color1; /* For browsers that do not support gradients */
     background: -webkit-linear-gradient(90deg, $color1 , $color2); /* For Safari 5.1 to 6.0 */
@@ -5,3 +6,4 @@
     background: -moz-linear-gradient(90deg, $color1, $color2); /* For Firefox 3.6 to 15 */
     background: linear-gradient(0deg, $color1 , $color2); /* Standard syntax */
 }
+

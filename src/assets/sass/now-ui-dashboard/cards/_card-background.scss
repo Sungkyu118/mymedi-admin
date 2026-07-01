@@ -1,3 +1,4 @@
+﻿@use "../variables" as *;
 .card-background{
     background-position: center center;
     background-size: cover;
@@ -63,3 +64,4 @@
         border-radius: $border-radius-large;
     }
 }
+

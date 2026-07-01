@@ -27,7 +27,7 @@
   </div>
 </template>
 <script>
-import { CollapseTransition } from 'vue2-transitions';
+import { CollapseTransition } from "src/components/Transitions";
 
 export default {
   name: 'collapse-item',
@@ -75,16 +75,19 @@ export default {
         this.deactivateAll();
       }
       this.active = !wasActive;
+    },
+    removeFromCollapse() {
+      if (this.$el && this.$el.parentNode) {
+        this.$el.parentNode.removeChild(this.$el);
+      }
+      this.removeItem(this);
     }
   },
   mounted() {
     this.addItem(this);
   },
-  destroyed() {
-    if (this.$el && this.$el.parentNode) {
-      this.$el.parentNode.removeChild(this.$el);
-    }
-    this.removeItem(this);
+  unmounted() {
+    this.removeFromCollapse();
   }
 };
 </script>

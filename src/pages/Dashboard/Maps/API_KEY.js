@@ -1,1 +1,3 @@
-export const API_KEY = process.env.VUE_APP_API_KEY;
+import { APP_API_KEY } from "@/env";
+
+export const API_KEY = APP_API_KEY;

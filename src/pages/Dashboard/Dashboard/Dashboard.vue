@@ -290,6 +290,7 @@
   </div>
 </template>
 <script>
+import { defineAsyncComponent } from "vue";
 import {
   Card,
   Table as NTable,
@@ -301,10 +302,11 @@ import {
 
 import axios from "axios";
 
-const LineChart = () =>
+const LineChart = defineAsyncComponent(() =>
   import(
     /* webpackChunkName: "dashboard-charts" */ "src/components/Charts/LineChart.vue"
-  );
+  )
+);
 
 export default {
   components: {
@@ -446,9 +448,9 @@ export default {
   },
   methods: {
     test() {
-      axios.get("http://localhost:8888/api/disease")
-    }
-  }
+      axios.get("http://localhost:8888/api/disease");
+    },
+  },
 };
 </script>
 <style>

@@ -79,10 +79,10 @@ export default {
       return hexToRgb(this.strokeColor, 1);
     },
     gradientId() {
-      return `lite-line-gradient-${this._uid}`;
+      return `lite-line-gradient-${this.$?.uid ?? "default"}`;
     },
     fillId() {
-      return `lite-line-fill-${this._uid}`;
+      return `lite-line-fill-${this.$?.uid ?? "default"}`;
     },
     normalizedPoints() {
       const values = this.data.length ? this.data : [0];

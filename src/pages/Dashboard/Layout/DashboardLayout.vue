@@ -127,6 +127,7 @@
 </template>
 <script>
 import "@/assets/styles/app-shell.scss";
+import { defineAsyncComponent } from "vue";
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
@@ -151,10 +152,11 @@ import UserMenu from "./Extra/UserMenu.vue";
 import { ZoomCenterTransition } from "src/components/Transitions";
 import { ensureProfileStore } from "src/store/ensure-profile-store";
 
-const SidebarShare = () =>
+const SidebarShare = defineAsyncComponent(() =>
   import(
     /* webpackChunkName: "dashboard-fixed-plugin" */ "./Extra/SidebarSharePlugin.vue"
-  );
+  )
+);
 
 export default {
   components: {
@@ -174,7 +176,11 @@ export default {
   methods: {
     async loadProfileStore() {
       await ensureProfileStore(this.$store);
-      await this.$store.dispatch("profile/me");
+      try {
+        await this.$store.dispatch("profile/me");
+      } catch (error) {
+        // The local frontend dev server does not provide the profile API.
+      }
     },
     initScrollbar() {
       let isWindows = navigator.platform.startsWith("Win");

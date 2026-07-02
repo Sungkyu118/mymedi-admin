@@ -75,7 +75,13 @@ export default {
           : "/img/placeholder.jpg";
       }
     );
-    await this.$store.dispatch("profile/me");
+    try {
+      await this.$store.dispatch("profile/me");
+    } catch (error) {
+      // The local frontend dev server does not provide the profile API.
+      this.title = "Profile";
+      this.avatar = "/img/placeholder.jpg";
+    }
   },
   data() {
     return {

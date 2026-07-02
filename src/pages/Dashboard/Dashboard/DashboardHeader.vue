@@ -8,15 +8,18 @@
 </template>
 
 <script>
-const HeaderChart = () =>
+import { defineAsyncComponent } from "vue";
+
+const HeaderChart = defineAsyncComponent(() =>
   import(
     /* webpackChunkName: "dashboard-header-chart" */ "./HeaderChart.vue"
-  );
+  )
+);
 
 export default {
   name: 'overview-header',
   components: {
-    HeaderChart
+    HeaderChart,
   },
   data() {
     return {

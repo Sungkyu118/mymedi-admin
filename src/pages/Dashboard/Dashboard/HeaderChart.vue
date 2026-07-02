@@ -64,10 +64,10 @@ export default {
       return Number(this.height) || 255;
     },
     gradientId() {
-      return `header-chart-gradient-${this._uid}`;
+      return `header-chart-gradient-${this.$?.uid ?? "default"}`;
     },
     fillId() {
-      return `header-chart-fill-${this._uid}`;
+      return `header-chart-fill-${this.$?.uid ?? "default"}`;
     },
     gridLines() {
       return [18, 36, 54, 72, 90];

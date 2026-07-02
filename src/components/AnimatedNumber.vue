@@ -21,7 +21,13 @@ export default {
   },
   methods: {
     initAnimation(newValue, oldValue) {
-      let vm = this;
+      const startValue = Number(oldValue ?? 0);
+      const endValue = Number(newValue ?? 0);
+
+      if (!Number.isFinite(startValue) || !Number.isFinite(endValue)) {
+        this.animatedNumber = Number.isFinite(endValue) ? endValue.toFixed(0) : "0";
+        return;
+      }
 
       function animate() {
         if (TWEEN.update()) {
@@ -29,11 +35,11 @@ export default {
         }
       }
 
-      new TWEEN.Tween({ tweeningNumber: oldValue })
+      new TWEEN.Tween({ tweeningNumber: startValue })
         .easing(TWEEN.Easing.Quadratic.Out)
-        .to({ tweeningNumber: newValue }, this.duration)
-        .onUpdate(function() {
-          vm.animatedNumber = this.tweeningNumber.toFixed(0);
+        .to({ tweeningNumber: endValue }, this.duration)
+        .onUpdate((state) => {
+          this.animatedNumber = Number(state.tweeningNumber).toFixed(0);
         })
         .start();
 

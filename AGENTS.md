@@ -6,18 +6,18 @@
 - Focus application changes under `src/` unless the task is specifically about docs or static assets.
 
 ## Stack
-- Vue 2 application bootstrapped with Vue CLI 3.
+- Vue 3 application bundled with Vite.
 - Routing uses `vue-router` in history mode.
 - State uses `vuex` modules.
-- UI is based on the Creative Tim / Now UI Dashboard Pro Vue 2 template.
-- Main UI libraries include Bootstrap 4, Element UI, Chart.js, CKEditor, and Axios.
+- UI is based on the Creative Tim / Now UI Dashboard Pro template.
+- Main UI libraries include Bootstrap 4, Element Plus, Chart.js, and Axios.
 
 ## Primary Commands
-- Install dependencies: `npm install`
-- Start dev server: `npm run serve`
-- Alias command kept by project: `npm run dev`
-- Production build: `npm run build`
-- Lint: `npm run lint`
+- Install dependencies: `corepack yarn install`
+- Start dev server: `corepack yarn dev`
+- Alias command kept by project: `corepack yarn serve`
+- Production build: `corepack yarn build`
+- Lint: `corepack yarn lint`
 
 ## Project Layout
 - `src/main.js`: app entry; wires router, store, plugins, VueMeta, and axios.
@@ -33,16 +33,20 @@
 
 ## Environment
 - Expected env keys are defined in `.env.example`:
-  - `VUE_APP_BASE_URL`
-  - `VUE_APP_API_BASE_URL`
-  - `VUE_APP_API_KEY`
-  - `VUE_APP_IS_DEMO`
-- API authentication setup reads `VUE_APP_API_BASE_URL` and posts to `/login` and `/register`.
+  - `VITE_APP_API_KEY`
+  - `VITE_APP_IS_DEMO`
+- Profile-specific server URLs are split by Vite mode:
+  - `.env.development` for local development URLs
+  - `.env.production` for production URLs
+  - `.env` for shared values used across profiles
+- `src/env.js` prefers `VITE_APP_*` and still accepts legacy `VUE_APP_*` values as a compatibility bridge.
+- API authentication setup reads the base URL from `src/env.js` and posts to `/login` and `/register`.
 
 ## Working Notes
-- Prefer `npm` over other package managers because the repo already includes `package-lock.json`.
+- Prefer `corepack yarn` because the repo is now standardized on `yarn.lock`.
+- The GitHub repository is connected to the Vercel project `mymedi-admin`, and pushes to the tracked branch trigger automatic deployment.
 - Use existing route patterns in `src/routes/routes.js` when adding screens.
-- Preserve the current Vue 2 Options API style unless the user explicitly asks for a migration.
+- Preserve the current Options API style unless the user explicitly asks for a Composition API refactor.
 - Reuse the existing Vuex module pattern for stateful features instead of introducing a new state library.
 - Keep styling changes aligned with the existing Now UI Dashboard Sass structure before adding ad hoc CSS.
 - Treat `docs/` as a separate mini-app; install and run it from that directory if docs work is needed.
@@ -58,3 +62,4 @@
 - Prefer focused edits that match existing file organization rather than broad refactors.
 - Do not rewrite template/demo areas unless they are part of the requested feature.
 - When a task touches auth, API calls, or route guards, verify the interaction across router, store, and axios setup together.
+- For each user request that changes repository files, summarize the work in the git commit message and create a commit before finishing the task.

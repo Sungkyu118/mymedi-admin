@@ -2,17 +2,17 @@
 
 <hr>
 
-We used, [Tooltips from Element UI](http://element.eleme.io/#/en-US/component/tooltip) and customized the look of it.
+We used [Tooltip from Element Plus](https://element-plus.org/en-US/component/tooltip.html) and customized the look of it.
 It's a really handy component and can be integrated very easily. 
-The Tooltip and Popover components are initialised globally in `src/globalComponents.js`
+The Tooltip and Popover components are initialized through the shared Element component registration module.
 
 
 ```js
-import {Tooltip} from 'element-ui'
+import { ElTooltip as Tooltip } from "element-plus";
 ```
 Global usage
 ```js
-Vue.use(Tooltip)
+app.use(Tooltip)
 ```
 Local usage
 ```js

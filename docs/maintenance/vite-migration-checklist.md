@@ -1,6 +1,6 @@
 # Vite Migration Checklist
 
-이 문서는 `E:\intellij project\mymedi-admin` 저장소를 `Vue CLI + Webpack` 에서 `Vite` 로 옮길 때 필요한 실제 작업을 정리한 체크리스트다.
+이 문서는 `E:\intellij project\mymedi-admin` 저장소를 `Vue CLI + Webpack` 에서 `Vite` 로 옮긴 결과와 남은 후속 점검 포인트를 정리한 체크리스트다.
 
 현재 상태
 
@@ -22,7 +22,6 @@
 영향 파일
 
 - [package.json](E:/intellij%20project/mymedi-admin/package.json)
-- [package-lock.json](E:/intellij%20project/mymedi-admin/package-lock.json)
 
 ## 2. 스크립트 전환
 
@@ -64,6 +63,8 @@
 - `process.env.*` 직접 참조는 `src/env.js` 를 통한 래퍼로 전환 완료
 - `process.env.NODE_ENV` 는 `import.meta.env.PROD` 기반으로 전환 완료
 - `process.env.BASE_URL` 은 `import.meta.env.BASE_URL` 기반으로 전환 완료
+- 현재는 `VITE_APP_*` 를 기본으로 사용하고, 기존 `VUE_APP_*` 는 호환용으로만 함께 읽음
+- 서버 URL 은 `.env.development`, `.env.production` 으로 profile별 분리했고, `.env` 는 공통값 용도로 유지
 
 현재 확인된 영향 파일
 
@@ -106,12 +107,12 @@
 
 - Vite 자체는 Babel 의존이 필수는 아님
 - 현재 앱 빌드/실행 경로에서 Babel 설정은 제거
-- ESLint 는 기존 `babel-eslint` parser 기준으로 유지
-- 필요 시 차후 `@babel/eslint-parser` 또는 최신 ESLint/Vue 조합으로 별도 업그레이드 가능
+- ESLint 는 `eslint.config.cjs` 기반의 ESLint 9 flat config 로 전환 완료
+- parser 는 `@babel/eslint-parser` 와 `vue-eslint-parser` 조합으로 정리 완료
 
 영향 파일
 
-- [.eslintrc.js](E:/intellij%20project/mymedi-admin/.eslintrc.js)
+- [eslint.config.cjs](E:/intellij%20project/mymedi-admin/eslint.config.cjs)
 
 ## 10. 검증 순서
 
@@ -136,4 +137,4 @@
 - 전환 난이도: 중간 이상
 - 가장 큰 작업: env 체계, HTML 엔트리, chunk 전략 재구성
 - 현재 PWA 판단: 관리자 화면 특성상 `manifest-only` 가 가장 안전
-- 가장 큰 장점: Vue 3 자체는 이미 끝났기 때문에 UI 호환보다 빌드도구 전환에 집중 가능
+- 현재 결론: Vite 전환은 완료됐고, 남은 일은 선택적인 성능/운영 최적화 성격이 큼

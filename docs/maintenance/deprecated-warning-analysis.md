@@ -1,5 +1,12 @@
 # Deprecated Warning Analysis
 
+## Current status on 2026-07-02
+
+- The app now runs on Vue `3.5.x` with Vite, not on the old Vue CLI bridge.
+- `corepack yarn lint` passes.
+- `corepack yarn build` passes.
+- Remaining warnings are mostly historical notes or third-party dependency concerns, not current build blockers.
+
 ## What was fixed on 2026-06-20
 
 - Removed `vue-authenticate` from the app dependency graph because it pulled in an extra legacy `axios@0.18.x`.
@@ -10,11 +17,11 @@
 
 ## Verified on 2026-06-23
 
-- `npm run lint` passes.
-- `npm run build` passes.
-- The production build still reports webpack asset-size warnings and Sass deprecation warnings, but they do not block compilation.
-- The Element UI compatibility shim and Vue 2 template syntax cleanup also pass `npm run lint` and `npm run build`.
-- The sidebar click cleanup and lifecycle cleanup preparation also pass `npm run lint` and `npm run build`.
+- `npm run lint` passed at that time.
+- `npm run build` passed at that time.
+- The production build still reported webpack asset-size warnings and Sass deprecation warnings, but they did not block compilation.
+- The Element UI compatibility shim and Vue 2 template syntax cleanup also passed `npm run lint` and `npm run build`.
+- The sidebar click cleanup and lifecycle cleanup preparation also passed `npm run lint` and `npm run build`.
 
 ## Verified on 2026-06-24
 
@@ -68,7 +75,7 @@ Some deprecation output now comes from old dependencies rather than the app code
 
 ### Build size warnings
 
-The current production build exceeds webpack's default size guidance:
+The historical Vue CLI build exceeded webpack's default size guidance. The current Vite build still has large bundles, but the old webpack-specific warning text no longer applies directly:
 
 - `js/auth.*.js`
 - `js/dashboard.*.js`
@@ -81,5 +88,5 @@ These are performance warnings, not compilation failures. The likely fixes are r
 
 1. Keep the local auth service and remove dead legacy auth code first.
 2. Migrate the custom Now UI Sass theme from `@import` to `@use` and `@forward`.
-3. Keep the Vue CLI 5 bridge unless Vite becomes necessary.
-4. Move Bootstrap 4 styles and Element UI overrides to a Vue 3 compatible stack.
+3. Continue with Vite and avoid reintroducing Vue CLI-specific configuration.
+4. Move Bootstrap 4 styles and old Element overrides to a cleaner Vue 3 compatible stack.

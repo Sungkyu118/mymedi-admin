@@ -6,7 +6,15 @@
 - Router: Vue Router `4.x`
 - State: Vuex `4.x`
 - UI libraries: `element-plus`, Bootstrap 4, Now UI Dashboard theme
-- Build system: Vue CLI `5.x`
+- Build system: Vite
+
+## Current status on 2026-07-02
+
+- Vue 3 compatibility migration is complete enough for normal development and builds.
+- Vite migration is complete.
+- `corepack yarn lint` passes.
+- `corepack yarn build` passes.
+- The remaining Vue work is optional follow-up cleanup such as reducing `@vue/compat` reliance and modernizing legacy UI/theme dependencies.
 
 ## Hard blockers in this repository
 
@@ -23,6 +31,8 @@
 - The custom `beforeEach` middleware chain remains isolated in `src/routes/middleware-pipeline.js`.
 
 ### Vue 2 template syntax
+
+The list below is historical migration context. These items were cleaned up during the Vue 3 transition.
 
 - `.native`
   - `src/components/SidebarPlugin/SidebarItem.vue`
@@ -58,6 +68,8 @@
 - A future cleanup can still move modules to Pinia, but it is no longer a blocker for the Vue 3 runtime.
 
 ## Suggested migration path
+
+This section is kept as historical rollout context. The current repository has already passed these phases.
 
 1. Finish dependency cleanup on Vue 2 first.
 2. Upgrade Vue CLI 3 to a modern bundler target.
@@ -119,37 +131,35 @@ Goal: make unmount cleanup easy to carry into Vue 3 while Vue 2 is still running
 
 Goal: decide between Vue CLI 5 and Vite with measured risk.
 
-- Status: completed with Vue CLI 5 on 2026-06-24.
+- Status: superseded by the completed Vite migration on 2026-07-02.
 - Upgraded `@vue/cli-service`, Babel/ESLint/PWA Vue CLI plugins, and `sass-loader` while keeping Vue at `2.7.16`.
 - Replaced the old `@vue/app` Babel preset with `@vue/cli-plugin-babel/preset`.
 - Added top-level `core-js@3` because Vue CLI 5/Babel usage polyfills resolve `core-js/modules/es.*.js` from the app root.
 - `npm run lint --scripts-prepend-node-path=true` passes.
 - `npm run build --scripts-prepend-node-path=true` passes.
 - The build still emits Sass deprecation warnings and webpack asset-size warnings, but no longer fails on missing `core-js` modules.
-- Vite should remain a later option only if Vue CLI 5 becomes a blocker. At this point, Vue CLI 5 is the lower-risk bridge because it preserves the existing webpack aliases, PWA setup, and chunk naming assumptions.
+- Vue CLI 5 served as a short-lived bridge, but the repository now runs on Vite.
 
 ### Step 5: Vue 3 branch
 
 Goal: move framework runtime after the compatibility cleanup is already small.
 
-- Status: buildable on Vue 3 compatibility mode as of 2026-06-24.
-- The current app still runs on Vue `2.7.16`, but the Vue 2 bootstrap is now isolated:
+- Status: completed through the Vue 3 compatibility runtime.
+- The app now runs on Vue `3.5.x` through `@vue/compat`, and the earlier bootstrap-isolation work made that switch easier:
   - `src/main.js` only installs app plugins and calls the app factory.
   - `src/app-plugins.js` centralizes root plugin installation.
-  - `src/create-app.js` centralizes the Vue 2 `new Vue(...)` instance creation.
+  - `src/create-app.js` centralizes the app instance creation.
 - Root app instance coupling was removed from the alert flow:
   - `src/store/modules/alerts-module.js` no longer calls `store.$app.$notify(...)`.
   - `src/components/NotificationPlugin/notification-service.js` owns the notification store and `notify(...)` function.
   - `src/components/NotificationPlugin/index.js` no longer creates a hidden `new Vue(...)` instance for notifications.
 - Vue global property writes are now centralized:
-  - `src/vue-global-properties.js` writes to Vue 2 `Vue.prototype` today.
-  - The same helper is ready to write to Vue 3 `app.config.globalProperties` after the app factory switches from the Vue constructor to the Vue app instance.
+  - `src/vue-global-properties.js` supports the Vue 3 app-level global property path.
   - `$sidebar`, `$notify`, `$notifications`, and `$isDemo` no longer write to `Vue.prototype` directly in feature plugins.
 - Sidebar state was also moved behind a service:
   - `src/components/SidebarPlugin/sidebar-service.js` owns the sidebar state and behavior.
   - `src/components/SidebarPlugin/index.js` no longer creates a hidden `new Vue(...)` instance for sidebar state.
-  - Vue 2 reactivity is preserved through `Vue.observable(...)` until the real Vue 3 switch replaces this with Vue 3 `reactive(...)` or app-level provides.
-- `rg -n 'new Vue\(|\$app|NotificationStore|SidebarStore' src` now leaves only the intentional Vue 2 app factory in `src/create-app.js`.
+  - The service layer survived the runtime switch and keeps sidebar behavior decoupled from the root app.
 - Router migration surface was reduced:
   - `src/routes/router-options.js` owns `routes`, `scrollBehavior`, and Vue Router 3 options.
   - `src/routes/middleware-pipeline.js` owns the custom `beforeEach` middleware chain.
@@ -157,18 +167,13 @@ Goal: move framework runtime after the compatibility cleanup is already small.
 - Vuex migration surface was reduced:
   - `src/store/store-options.js` owns the current Vuex module map.
   - `src/store/index.js` now only installs Vuex and creates the Vuex 3 store instance.
-- Node runtime check:
-  - `nvm` has an incomplete `v20.16.0` folder with no `node.exe`.
-  - The local `v20.10.0` folder currently contains a `node.exe` that reports `v24.15.0` with npm `11.12.1`.
-  - `npm run lint --scripts-prepend-node-path=true` passes on that Node 24 runtime, with npm warning that `--scripts-prepend-node-path` is unknown.
-  - `npm run build --scripts-prepend-node-path=true` passes on that Node 24 runtime, with the existing Sass and asset-size warnings.
 - `vue`, `@vue/compat`, and `@vue/compiler-sfc` are on `3.5.x`.
 - Vue Router is on `4.x`.
 - Vuex is on `4.x`.
 - `element-ui`, `vue-template-compiler`, `vue-meta`, `vue-axios`, and `vee-validate` were removed.
 - `vue2-transitions` was replaced by local Vue 3 transition wrappers in `src/components/Transitions`.
-- `npm run lint --scripts-prepend-node-path=true` passes.
-- `npm run build --scripts-prepend-node-path=true` passes.
+- `corepack yarn lint` passes.
+- `corepack yarn build` passes.
 
 ### Step 6: Remove compatibility-mode assumptions
 
@@ -180,6 +185,6 @@ Goal: move from buildable Vue 3 compat mode toward native Vue 3 behavior.
 - Removed duplicated Vue 2 lifecycle aliases (`beforeDestroy`, `destroyed`) where matching Vue 3 hooks already existed.
 - Changed the sidebar item root from a dynamic `router-link` with `tag="li"` to an explicit `<li>` root so the sidebar DOM shape no longer depends on removed Vue Router 3 behavior.
 - `rg -n 'slot=|beforeDestroy\(|destroyed\(|<router-link[^\n]*tag=|tag="li"' src` has no remaining matches.
-- `npm run lint --scripts-prepend-node-path=true` passes.
-- `npm run build --scripts-prepend-node-path=true` passes.
+- `corepack yarn lint` passes.
+- `corepack yarn build` passes.
 - Run a browser pass through login, dashboard, user profile, tables, notifications, maps, and password reset.

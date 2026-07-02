@@ -8,11 +8,14 @@ project.
 ## Steps to install
 
 1. Navigate to your Vue Now UI Dashboard project folder: `cd your-vue-now-ui-dashbord-project`
-2. Install project dependencies: `npm install`
-3. Create a new .env file: `cp .env.example .env`
-4. `VUE_APP_BASE_URL` should contain the URL of your Vue Now UI Dashboard Project (eg. http://localhost:8080/)
-5. `VUE_APP_API_BASE_URL` should contain the URL of your Laravel JSON:API Project. (eg. http://localhost:3000/api/v1)
-6. Run `npm run dev` to start the application in a local development environment or `npm run build` to build release distributables.
+2. Install project dependencies: `corepack yarn install`
+3. Create env files from the provided examples
+4. Put shared values in `.env`
+5. Put local development URLs in `.env.development`
+6. Put production URLs in `.env.production`
+7. `VITE_APP_BASE_URL` should contain the URL of your Vue Now UI Dashboard Project (eg. http://127.0.0.1:8080/)
+8. `VITE_APP_API_BASE_URL` should contain the URL of your Laravel JSON:API Project. (eg. http://localhost:3000/api/v1)
+9. Run `corepack yarn dev` to start the application in a local development environment or `corepack yarn build` to build release distributables.
 
 ## Now UI Dashboard
 
@@ -48,9 +51,9 @@ Here's the list of global components:
 - **StatsCard**
 - **Modal**
 - **RouteBreadcrumb**
-- **ElInput** (element-ui)
-- **ElTooltip** (element-ui)
-- **ElPopover** (element-ui)
+- **ElInput** (Element Plus)
+- **ElTooltip** (Element Plus)
+- **ElPopover** (Element Plus)
 - **Sidebar**
 - **SidebarItem**
 
@@ -73,11 +76,10 @@ import routes from './routes';
 ```
 
 
-## Vue-cli
+## Build Tooling
 
-We used the latest 3.x [Vue CLI](https://github.com/vuejs/vue-cli) which aims to reduce project configuration
-to as little as possible. Almost everything is inside `package.json` + some other related files such as
-`.babelrc`, `.eslintrc.js` and `.postcssrc.js`
+The current app runs on [Vite](https://vitejs.dev/) with a root `index.html`, `vite.config.mjs`, and an ESLint flat config.
+Most project-level configuration now lives in files such as `package.json`, `vite.config.mjs`, `eslint.config.cjs`, and `.postcssrc.js`.
 
 ## Learn more
 

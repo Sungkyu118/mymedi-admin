@@ -9,9 +9,9 @@ function resolveSrc(dir) {
   return path.resolve(__dirname, dir);
 }
 
-// Draft config for the future Vite migration.
-// This file is active for steps 1 through 3, but PWA wiring and deeper
-// chunk/perf tuning still need a follow-up pass.
+// Active Vite configuration for the admin app.
+// PWA stays manifest-only for now, while chunk/perf tuning can continue
+// incrementally without changing the current bundler choice.
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const isProduction = mode === "production";

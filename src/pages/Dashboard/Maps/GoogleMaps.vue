@@ -7,7 +7,10 @@
             <h4 class="card-title">Satellite Map</h4>
           </div>
         </template>
-        <div id="satelliteMap" class="map map-big"></div>
+        <div v-if="mapError" class="map map-big map-placeholder">
+          {{ mapError }}
+        </div>
+        <div v-else id="satelliteMap" class="map map-big"></div>
       </card>
     </div>
     <div class="col-md-6">
@@ -17,7 +20,10 @@
             <h4 class="card-title">Regular Map</h4>
           </div>
         </template>
-        <div id="regularMap" class="map"></div>
+        <div v-if="mapError" class="map map-placeholder">
+          {{ mapError }}
+        </div>
+        <div v-else id="regularMap" class="map"></div>
       </card>
     </div>
     <div class="col-md-6">
@@ -27,17 +33,23 @@
             <h4 class="card-title">Custom Skin & Settings Map</h4>
           </div>
         </template>
-        <div id="customSkinMap" class="map"></div>
+        <div v-if="mapError" class="map map-placeholder">
+          {{ mapError }}
+        </div>
+        <div v-else id="customSkinMap" class="map"></div>
       </card>
     </div>
   </div>
 </template>
 <script>
-import { API_KEY } from './API_KEY.js';
-import GoogleMapsLoader from 'google-maps';
-GoogleMapsLoader.KEY = API_KEY;
+import { hasGoogleMapsApiKey, loadGoogleMapsApi } from "./google-maps-api";
 
 export default {
+  data() {
+    return {
+      mapError: "",
+    };
+  },
   methods: {
     initSattelliteMap() {
       // Satellite Map
@@ -53,12 +65,7 @@ export default {
         document.getElementById('satelliteMap'),
         mapOptions
       );
-
-      const marker = new window.google.maps.Marker({
-        position: myLatlng,
-        title: 'Satellite Map!'
-      });
-      marker.setMap(map);
+      return map;
     },
     initRegularMap() {
       // Regular Map
@@ -73,13 +80,7 @@ export default {
         document.getElementById('regularMap'),
         mapOptions
       );
-
-      const marker = new window.google.maps.Marker({
-        position: myLatlng,
-        title: 'Regular Map!'
-      });
-
-      marker.setMap(map);
+      return map;
     },
     initCustomSkinMap(google) {
       // Custom Skin & Settings Map
@@ -156,22 +157,28 @@ export default {
         document.getElementById('customSkinMap'),
         mapOptions
       );
-
-      const marker = new google.maps.Marker({
-        position: myLatlng,
-        title: 'Custom Skin & Settings Map!'
-      });
-
-      marker.setMap(map);
+      return map;
     }
   },
-  mounted() {
-    GoogleMapsLoader.load(google => {
+  async mounted() {
+    if (!hasGoogleMapsApiKey) {
+      this.mapError = "Google Maps API key is not configured.";
+      return;
+    }
+
+    try {
+      const google = await loadGoogleMapsApi();
+      if (!google) {
+        this.mapError = "Google Maps API key is not configured.";
+        return;
+      }
       this.initSattelliteMap(google);
       this.initRegularMap(google);
       this.initCustomSkinMap(google);
-    });
-  }
+    } catch (error) {
+      this.mapError = "Google Maps could not be loaded.";
+    }
+  },
 };
 </script>
 <style lang="scss">
@@ -181,5 +188,16 @@ export default {
     height: 300px;
     width: 100%;
   }
+}
+
+.map-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  font-weight: 600;
+  background: #f4f5f7;
+  text-align: center;
+  padding: 24px;
 }
 </style>

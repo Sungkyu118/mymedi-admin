@@ -1,4 +1,3 @@
-/* eslint-disable */
 import 'es6-promise/auto'
 
 export default (function initPollyFills () {

@@ -16,5 +16,4 @@
 
 import { createVueApp } from "./create-app";
 
-/* eslint-disable no-new */
 createVueApp();

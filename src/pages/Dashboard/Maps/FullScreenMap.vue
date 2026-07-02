@@ -1,15 +1,20 @@
 <template>
-  <div id="map" class="full-screen-map"></div>
+  <div
+    v-if="mapError"
+    class="full-screen-map full-screen-map--placeholder"
+  >
+    {{ mapError }}
+  </div>
+  <div v-else id="map" class="full-screen-map"></div>
 </template>
 <script>
-import GoogleMapsLoader from "google-maps";
-import { API_KEY } from "./API_KEY";
-GoogleMapsLoader.KEY = API_KEY;
+import { hasGoogleMapsApiKey, loadGoogleMapsApi } from "./google-maps-api";
 
 export default {
   data() {
     return {
       nav: null,
+      mapError: "",
     };
   },
   methods: {
@@ -186,13 +191,7 @@ export default {
         document.getElementById("map"),
         mapOptions
       );
-
-      const marker = new window.google.maps.Marker({
-        position: myLatlng,
-        title: "Regular Map!",
-      });
-
-      marker.setMap(map);
+      return map;
     },
     restoreNavbar() {
       if (!this.nav) {
@@ -204,7 +203,7 @@ export default {
       this.nav.classList.remove("fixed-top");
     },
   },
-  mounted() {
+  async mounted() {
     const nav = document.getElementsByTagName("nav");
     if (nav.length > 0) {
       this.nav = nav[0];
@@ -216,9 +215,21 @@ export default {
       this.nav.classList.remove("navbar-transparent");
     }
 
-    GoogleMapsLoader.load((google) => {
+    if (!hasGoogleMapsApiKey) {
+      this.mapError = "Google Maps API key is not configured.";
+      return;
+    }
+
+    try {
+      const google = await loadGoogleMapsApi();
+      if (!google) {
+        this.mapError = "Google Maps API key is not configured.";
+        return;
+      }
       this.initMap(google);
-    });
+    } catch (error) {
+      this.mapError = "Google Maps could not be loaded.";
+    }
   },
   beforeUnmount() {
     this.restoreNavbar();
@@ -228,5 +239,15 @@ export default {
 <style>
 #map {
   height: 100vh;
+}
+
+.full-screen-map--placeholder {
+  align-items: center;
+  background: #f4f5f7;
+  color: #6c757d;
+  display: flex;
+  font-weight: 600;
+  justify-content: center;
+  text-align: center;
 }
 </style>

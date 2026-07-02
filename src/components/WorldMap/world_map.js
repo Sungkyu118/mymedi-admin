@@ -4,7 +4,6 @@
  * Copyright 2011-2014, Kirill Lebedev
  *
  */
-/* eslint-disable */
 function initMap() {
 // World_mill_en code
   if(!window.$) return
